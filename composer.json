@@ -1,0 +1,33 @@
+{
+  "name": "heimrichhannot/contao-flatpickr-bundle",
+  "type": "contao-bundle",
+  "description": "A bundle to provide flatpickr support for contao.",
+  "license": "LGPL-3.0-or-later",
+  "require": {
+    "php": "^7.1",
+    "contao/core-bundle": "^4.4",
+    "heimrichhannot/contao-utils-bundle": "^2.20",
+    "heimrichhannot-contao-components/flatpickr": "^1.3"
+  },
+  "suggest": {
+    "heimrichhannot/contao-encore-bundle": "Manage dependencies with Symfony Webpack Encore"
+  },
+  "autoload": {
+    "psr-4": {
+      "HeimrichHannot\\ContaoFlatpickrBundle\\": "src/"
+    },
+    "classmap": [
+      "src/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "HeimrichHannot\\ContaoFlatpickrBundle\\ContaoManager\\Plugin",
+    "foxy": true
+  }
+}

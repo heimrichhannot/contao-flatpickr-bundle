@@ -1,0 +1,10 @@
+{
+  "name": "contao-flatpickr-bundle",
+  "version": "1.0.0",
+  "description": "Flatpickr integration for contao",
+  "author": "Heimrich & Hannot GmbH <digitales@heimrich-hannot.de>",
+  "license": "LGPL-3.0-or-later",
+  "dependencies": {
+    "flatpickr": "^4.5"
+  }
+}

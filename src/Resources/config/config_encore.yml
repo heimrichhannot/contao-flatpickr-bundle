@@ -1,0 +1,9 @@
+huh_encore:
+  encore:
+    entries:
+      - { name: "ContaoFlatPickrBundle", requiresCss: true, head: false, file:"vendor/heimrichhannot/contao-flatpickr-bundle/src/Resources/assets/js/contaoFlatpickrBundle.es6.js" }
+    legacy:
+      js:
+        - flatpickr
+      css:
+        - flatpickr
