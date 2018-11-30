@@ -11,6 +11,15 @@ function FlatpickrBundle(selector) {
         let options = {
             wrap: true,
         };
+        let inputElement = element.querySelector('input[type="text"]');
+        if (inputElement.dataset.enableTime === "1") {options.enableTime = true};
+        if (inputElement.dataset.noCalendar === "1") {options.noCalendar = true};
+        if (inputElement.dataset.minDate) options.minDate = inputElement.dataset.minDate;
+        if (inputElement.dataset.maxDate) options.maxDate = inputElement.dataset.maxDate;
+
+        console.log(options);
+        console.log(inputElement.dataset);
+
         flatpickr(element, options);
     });
 }

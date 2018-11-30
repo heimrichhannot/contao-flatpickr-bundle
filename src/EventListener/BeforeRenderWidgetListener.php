@@ -67,39 +67,71 @@ class BeforeRenderWidgetListener
 
 		if (isset($config['minDate']))
 		{
-			$attributes['data-minDate'] = $config['minDate'];
+			$attributes['data-min-date'] = $config['minDate'];
 		}
 		if (isset($config['maxDate']))
 		{
-			$attributes['data-maxDate'] = $config['maxDate'];
+			$attributes['data-max-date'] = $config['maxDate'];
+		}
+		if ($timepicker)
+		{
+			$attributes['data-enable-time'] = true;
+		}
+		if (!$datepicker) {
+			$attributes['data-no-calendar'] = true;
 		}
 
 		$templateData = $event->getTemplateData();
 		$templateData['arrConfiguration']['datepicker'] = $datepicker;
 		$templateData['arrConfiguration']['timepicker'] = $timepicker;
-		$templateData['arrConfiguration']['inputAppend'] = $this->twig->render("@HeimrichHannotContaoFlatpickr/forms/partials/btn_datepicker.html.twig");
-		$templateData['attributes'] = $this->generateAttributes($templateData['attributes'], $attributes);
+		$this->generatePicker($templateData);
+		$this->generateAttributes($templateData, $attributes);
 		$templateData['inputGroupClass'] = $templateData['inputGroupClass'] ? $templateData['inputGroupClass'].' flatpickr' : 'flatpickr';
 		$event->setTemplateData($templateData);
 	}
 
-	protected function generateAttributes(?string $attributes, array $attibutesToAdd)
+	protected function generateAttributes(array &$templateData, array $attributeList)
 	{
-		$result = '';
-		foreach ($attibutesToAdd as $key=>$value)
+		$attributes = '';
+		if (isset($templateData['attributes']))
 		{
+			$attributes = $templateData['attributes'];
+		}
+		foreach ($attributeList as $key => $value)
+		{
+			$attributes.=' ';
+			if ($value === true) {
+				$value = "1";
+			}
 			if (is_string($key))
 			{
-				$result.=$key.'="'.$value.'" ';
+				$attributes .= $key.'="'.$value.'"';
 			}
 			else {
-				$result.= $value;
+				$attributes .= $value;
 			}
 		}
-		if ($attributes)
-		{
-			$result = $attributes.' '. $result;
+		$templateData['attributes'] = trim($attributes, " ");
+	}
+
+	/**
+	 * @param $templateData
+	 * @param string $pickerPosition
+	 * @throws \Twig_Error_Loader
+	 * @throws \Twig_Error_Runtime
+	 * @throws \Twig_Error_Syntax
+	 */
+	protected function generatePicker(&$templateData): void
+	{
+		$pickerPosition = 'inputAppend';
+		if (isset($templateData['arrConfiguration']['prependDatePicker']) && $templateData['arrConfiguration']['prependDatePicker'] === true) {
+			$pickerPosition = 'inputPrepend';
 		}
-		return trim($result, " ");
+		$picker = $this->twig->render("@HeimrichHannotContaoFlatpickr/forms/partials/btn_datepicker.html.twig");
+		if (!isset($templateData['arrConfiguration'][$pickerPosition]))
+		{
+			$templateData['arrConfiguration'][$pickerPosition] = '';
+		}
+		$templateData['arrConfiguration'][$pickerPosition] .= $picker;
 	}
 }
