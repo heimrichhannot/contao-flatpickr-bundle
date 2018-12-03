@@ -49,6 +49,7 @@ class BeforeRenderWidgetListener
 		}
 		$datepicker = true;
 		$timepicker = false;
+		$timepickerOnly = false;
 		$attributes = ['data-input'];
 
 		if (isset($config['rgxp']))
@@ -80,11 +81,15 @@ class BeforeRenderWidgetListener
 		if (!$datepicker) {
 			$attributes['data-no-calendar'] = true;
 		}
+		if (!$datepicker && $timepicker)
+		{
+			$timepickerOnly = true;
+		}
 
 		$templateData = $event->getTemplateData();
 		$templateData['arrConfiguration']['datepicker'] = $datepicker;
 		$templateData['arrConfiguration']['timepicker'] = $timepicker;
-		$this->generatePicker($templateData);
+		$this->generatePicker($templateData, $timepickerOnly);
 		$this->generateAttributes($templateData, $attributes);
 		$templateData['inputGroupClass'] = $templateData['inputGroupClass'] ? $templateData['inputGroupClass'].' flatpickr' : 'flatpickr';
 		$event->setTemplateData($templateData);
@@ -116,18 +121,26 @@ class BeforeRenderWidgetListener
 
 	/**
 	 * @param $templateData
-	 * @param string $pickerPosition
+	 * @param bool $timepickerOnly
 	 * @throws \Twig_Error_Loader
 	 * @throws \Twig_Error_Runtime
 	 * @throws \Twig_Error_Syntax
 	 */
-	protected function generatePicker(&$templateData): void
+	protected function generatePicker(&$templateData, bool $timepickerOnly): void
 	{
 		$pickerPosition = 'inputAppend';
+		$pickerType = 'datepicker';
+		if ($timepickerOnly)
+		{
+			$pickerType = 'timepicker';
+		}
+		$picker = $this->twig->render("@HeimrichHannotContaoFlatpickr/forms/partials/btn_datepicker.html.twig", [
+			'picker' => $pickerType,
+		]);
+
 		if (isset($templateData['arrConfiguration']['prependDatePicker']) && $templateData['arrConfiguration']['prependDatePicker'] === true) {
 			$pickerPosition = 'inputPrepend';
 		}
-		$picker = $this->twig->render("@HeimrichHannotContaoFlatpickr/forms/partials/btn_datepicker.html.twig");
 		if (!isset($templateData['arrConfiguration'][$pickerPosition]))
 		{
 			$templateData['arrConfiguration'][$pickerPosition] = '';
