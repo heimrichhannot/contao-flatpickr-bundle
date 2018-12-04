@@ -2,7 +2,7 @@
 
 A bundle to provide frontend date- and timepicker using [flatpickr.js](https://flatpickr.js.org).
 
-> Early beta. Currently only works with [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle).
+> Early beta. Currently only works with [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle) and [Contao Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle).
 
 ## Setup
 
@@ -19,3 +19,4 @@ Option            | Type   | Default | Description
 minDate           | string |         | A formatted date/time constraining the date/time picker to a certain minimum date/time.
 maxDate           | string |         | A formatted date/time constraining the date/time picker to a certain maximum date/time.
 prependDatePicker | bool   | false   | Prepend date picker button instead of append it.
+enableAmPm        | bool   | false   | Display a AM/PM selector instead of using 24 hr format.

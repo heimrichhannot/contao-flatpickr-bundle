@@ -65,37 +65,23 @@ class BeforeRenderWidgetListener
 					break;
 			}
 		}
-
-		if (isset($config['minDate']))
-		{
-			$attributes['data-min-date'] = $config['minDate'];
-		}
-		if (isset($config['maxDate']))
-		{
-			$attributes['data-max-date'] = $config['maxDate'];
-		}
-		if ($timepicker)
-		{
-			$attributes['data-enable-time'] = true;
-		}
-		if (!$datepicker) {
-			$attributes['data-no-calendar'] = true;
-		}
 		if (!$datepicker && $timepicker)
 		{
 			$timepickerOnly = true;
 		}
 
+		$this->generateAttributes($attributes, $config, $datepicker, $timepicker);
+
 		$templateData = $event->getTemplateData();
 		$templateData['arrConfiguration']['datepicker'] = $datepicker;
 		$templateData['arrConfiguration']['timepicker'] = $timepicker;
-		$this->generatePicker($templateData, $timepickerOnly);
-		$this->generateAttributes($templateData, $attributes);
+		$this->compilePicker($templateData, $timepickerOnly);
+		$this->compileAttributes($templateData, $attributes);
 		$templateData['inputGroupClass'] = $templateData['inputGroupClass'] ? $templateData['inputGroupClass'].' flatpickr' : 'flatpickr';
 		$event->setTemplateData($templateData);
 	}
 
-	protected function generateAttributes(array &$templateData, array $attributeList)
+	protected function compileAttributes(array &$templateData, array $attributeList)
 	{
 		$attributes = '';
 		if (isset($templateData['attributes']))
@@ -126,7 +112,7 @@ class BeforeRenderWidgetListener
 	 * @throws \Twig_Error_Runtime
 	 * @throws \Twig_Error_Syntax
 	 */
-	protected function generatePicker(&$templateData, bool $timepickerOnly): void
+	protected function compilePicker(&$templateData, bool $timepickerOnly): void
 	{
 		$pickerPosition = 'inputAppend';
 		$pickerType = 'datepicker';
@@ -146,5 +132,40 @@ class BeforeRenderWidgetListener
 			$templateData['arrConfiguration'][$pickerPosition] = '';
 		}
 		$templateData['arrConfiguration'][$pickerPosition] .= $picker;
+	}
+
+	protected function generateAttributes(array &$attributes, array $config, bool $datepicker, bool $timepicker)
+	{
+		if (isset($config['minDate']))
+		{
+			$attributes['data-min-date'] = $config['minDate'];
+		}
+		if (isset($config['maxDate']))
+		{
+			$attributes['data-max-date'] = $config['maxDate'];
+		}
+
+		if ($timepicker)
+		{
+			$attributes['data-enable-time'] = true;
+		}
+		if (!$datepicker) {
+			$attributes['data-no-calendar'] = true;
+		}
+
+		$dateFormat = $GLOBALS['TL_CONFIG']['dateFormat'];
+		if ($datepicker && $timepicker)
+		{
+			$dateFormat = $GLOBALS['TL_CONFIG']['datimFormat'];
+		}
+		elseif (!$datepicker && $timepicker) {
+			$dateFormat = $GLOBALS['TL_CONFIG']['timeFormat'];
+		}
+		$attributes['data-date-format'] = $dateFormat;
+
+		if ($config['enableAmPm'] === true)
+		{
+			$attributes['enableAmPm'] = true;
+		}
 	}
 }
