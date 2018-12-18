@@ -12,8 +12,8 @@
 namespace HeimrichHannot\ContaoFlatpickrBundle\EventListener;
 
 
-use HeimrichHannot\BootstrapTemplatesBundle\BootstrapTemplate\FormTemplate;
-use HeimrichHannot\BootstrapTemplatesBundle\Event\BeforeRenderBootstrapTemplateEvent;
+use HeimrichHannot\TwigTemplatesBundle\Twig\FormTemplate;
+use HeimrichHannot\TwigTemplatesBundle\Event\BeforeRenderTwigTemplateEvent;
 use Twig\Environment;
 
 class BeforeRenderWidgetListener
@@ -32,7 +32,7 @@ class BeforeRenderWidgetListener
 		$this->twig = $twig;
 	}
 
-	public function onHuhBootstrapBeforeRenderTemplate(BeforeRenderBootstrapTemplateEvent $event)
+	public function onHuhBootstrapBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
 	{
 		if (!FormTemplate::TYPE === $event->getType())
 		{

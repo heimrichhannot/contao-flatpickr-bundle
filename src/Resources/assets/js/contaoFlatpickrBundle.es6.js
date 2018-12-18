@@ -15,7 +15,6 @@ function FlatpickrBundle(selector) {
 
     this.createFlatpickrInstances = function()
     {
-        console.log("Default config", defaultConfig);
         elements.forEach((element, key, parent) => {
             let options = Object.assign({}, defaultConfig);
             let inputElement = element.querySelector('input[type="text"]');
