@@ -2,4 +2,4 @@ services:
   HeimrichHannot\ContaoFlatpickrBundle\EventListener\BeforeRenderWidgetListener:
     autowire: true
     tags:
-      - { name: kernel.event_listener, event: huh.bootstrap.beforeRenderTemplate }
+      - { name: kernel.event_listener, event: huh.twig.beforeRenderTemplate }

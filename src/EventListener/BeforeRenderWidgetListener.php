@@ -32,7 +32,7 @@ class BeforeRenderWidgetListener
 		$this->twig = $twig;
 	}
 
-	public function onHuhBootstrapBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
+	public function onHuhTwigBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
 	{
 		if (!FormTemplate::TYPE === $event->getType())
 		{

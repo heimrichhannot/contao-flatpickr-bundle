@@ -1,8 +1,11 @@
 # Contao Flatpickr Bundle
 
+[![Latest Stable Version](https://poser.pugx.org/heimrichhannot/contao-flatpickr-bundle/v/stable)](https://packagist.org/packages/heimrichhannot/contao-flatpickr-bundle)
+[![Total Downloads](https://poser.pugx.org/heimrichhannot/contao-flatpickr-bundle/downloads)](https://packagist.org/packages/heimrichhannot/contao-flatpickr-bundle)
+
 A bundle to provide frontend date- and timepicker using [flatpickr.js](https://flatpickr.js.org).
 
-> Early beta. Currently only works with [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle) and [Contao Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle).
+> Beta. Currently only works with [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle) and [Contao Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle).
 
 ## Features
 * show date- or timepicker in frontend forms
