@@ -24,10 +24,6 @@ function FlatpickrBundle(selector) {
             if (inputElement.dataset.maxDate) options.maxDate = inputElement.dataset.maxDate;
             if (inputElement.dataset.dateFormat) options.dateFormat = inputElement.dataset.dateFormat;
             if (inputElement.dataset.enableAmPm === '1') options.time_24hr = false;
-
-            // console.log("elements", element);
-            console.log("options", options);
-
             flatpickr(element, options);
         });
     };
@@ -41,7 +37,6 @@ function FlatpickrBundle(selector) {
         this.createFlatpickrInstances();
 
     }).catch(() => {
-        console.log("error");
         this.createFlatpickrInstances()
     });
 }
