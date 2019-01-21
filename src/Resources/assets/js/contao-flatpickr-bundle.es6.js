@@ -11,6 +11,7 @@ function FlatpickrBundle(selector) {
     const defaultConfig = {
         wrap: true,
         time_24hr: true,
+        allowInput: true
     };
 
     this.createFlatpickrInstances = function()
@@ -18,6 +19,7 @@ function FlatpickrBundle(selector) {
         elements.forEach((element, key, parent) => {
             let options = Object.assign({}, defaultConfig);
             let inputElement = element.querySelector('input[type="text"]');
+            console.log(inputElement.dataset);
             if (inputElement.dataset.enableTime === '1') options.enableTime = true;
             if (inputElement.dataset.noCalendar === '1') options.noCalendar = true;
             if (inputElement.dataset.minDate) options.minDate = inputElement.dataset.minDate;
