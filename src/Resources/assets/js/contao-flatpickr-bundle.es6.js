@@ -19,7 +19,6 @@ function FlatpickrBundle(selector) {
         elements.forEach((element, key, parent) => {
             let options = Object.assign({}, defaultConfig);
             let inputElement = element.querySelector('input[type="text"]');
-            console.log(inputElement.dataset);
             if (inputElement.dataset.enableTime === '1') options.enableTime = true;
             if (inputElement.dataset.noCalendar === '1') options.noCalendar = true;
             if (inputElement.dataset.minDate) options.minDate = inputElement.dataset.minDate;
@@ -43,8 +42,10 @@ function FlatpickrBundle(selector) {
     });
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
+    new FlatpickrBundle('.flatpickr');
+});
+
+document.addEventListener('formhybrid_ajax_complete', function() {
     new FlatpickrBundle('.flatpickr');
 });
