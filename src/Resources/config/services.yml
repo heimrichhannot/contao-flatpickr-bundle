@@ -3,3 +3,7 @@ services:
     autowire: true
     tags:
       - { name: kernel.event_listener, event: huh.twig.beforeRenderTemplate }
+  HeimrichHannot\ContaoFlatpickrBundle\EventListener\AdjustFilterOptionsListener:
+    autowire: true
+    tags:
+      - { name: kernel.event_listener, event: huh.filter.event.adjust_filter_options_event }
