@@ -1,0 +1,12 @@
+{
+  "entrypoints": {
+    "contao-flatpickr-bundle": {
+      "css": [
+        "/bundles/heimrichhannotcontaoflatpickr/js/contao-flatpickr-bundle.css"
+      ],
+      "js": [
+        "/bundles/heimrichhannotcontaoflatpickr/js/contao-flatpickr-bundle.js"
+      ]
+    }
+  }
+}

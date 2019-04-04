@@ -8,5 +8,6 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-$GLOBALS['TL_JAVASCRIPT']['flatpickr'] = 'assets/flatpickr/dist/flatpickr.min.js|static';
-$GLOBALS['TL_USER_CSS']['flatpickr'] = 'assets/flatpickr/dist/flatpickr.min.css|static';
+$GLOBALS['TL_JAVASCRIPT']['flatpickr'] = 'assets/flatpickr/dist/flatpickr.min.js';
+$GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotcontaoflatpickr/js/contao-flatpickr-bundle.js';
+$GLOBALS['TL_USER_CSS']['flatpickr'] = 'assets/flatpickr/dist/flatpickr.min.css';
