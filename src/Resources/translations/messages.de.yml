@@ -1,0 +1,5 @@
+huh.filter.input_group_text.flatpickr:
+  fa_calendar: '<span class="fas fa-calendar" aria-hidden="true" data-toggle></span>'
+  fa_clock_o: '<span class="fas fa-clock" aria-hidden="true" data-toggle></span>'
+  button.fa_calendar: '<button class="btn btn-outline-secondary" type="button" data-toggle><i class="fas fa-calendar" aria-hidden="true"></i><span class="sr-only">Datum</span></button>'
+  button.fa_clock_o: '<button class="btn btn-outline-secondary" type="button" data-toggle><i class="fas fa-clock" aria-hidden="true"></i><span class="sr-only">Uhrzeit</span></button>'
