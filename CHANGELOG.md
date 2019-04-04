@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [0.3.0] - 2019-04-04
 
+Now works without encore bundle!
+
 * added input prepand and append config for filter bundle
 * added support for non-encore-usage
 * removed outdated lines from composer.json
