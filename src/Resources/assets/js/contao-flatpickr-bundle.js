@@ -15,7 +15,7 @@ class FlatpickrBundle
 
         import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + this.lang + '.js').then((locale) =>
         {
-            flatpickr.localize(locale.default[lang]);
+            flatpickr.localize(locale.default[this.lang]);
             this.createFlatpickrInstances();
 
         }).catch(() => {

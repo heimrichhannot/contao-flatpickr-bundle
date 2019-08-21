@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2019-08-21
+
+* fixed localization not loaded correctly
+
 ## [0.3.0] - 2019-04-04
 
 Now works without encore bundle!
