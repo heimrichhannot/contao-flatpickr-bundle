@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2019-11-13
+
+* added CustomEvent 'huh.flatpickr.event.prepare' for adjusting flatpickr options before initialization
+
 ## [0.3.1] - 2019-08-21
 
 * fixed localization not loaded correctly

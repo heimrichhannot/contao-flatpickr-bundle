@@ -41,6 +41,16 @@ class FlatpickrBundle
                 if (inputElement.dataset.dateFormat) options.dateFormat = inputElement.dataset.dateFormat;
                 if (inputElement.dataset.enableAmPm === '1') options.time_24hr = false;
             }
+            let event = new CustomEvent('huh.flatpickr.event.prepare', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    options: options,
+                    target: element,
+                    lang: this.lang
+                }
+            });
+            element.dispatchEvent(event);
             flatpickr(element, options);
         });
     }

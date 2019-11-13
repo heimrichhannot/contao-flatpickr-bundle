@@ -5,3 +5,15 @@ composer.lock
 # Yarn
 node_modules
 yarn.lock
+yarn-error.log
+package-lock.json
+
+.build/
+.buildpath
+.idea/
+nbproject/
+.project
+.settings/
+
+# others
+debug.txt
