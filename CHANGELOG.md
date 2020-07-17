@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] - 2020-07-17
+- fixed encore entry definition
+
 ## [1.0.0] - 2019-11-13
 
 * added CustomEvent 'huh.flatpickr.event.prepare' for adjusting flatpickr options before initialization

@@ -47,6 +47,7 @@ class FlatpickrBundle
                 detail: {
                     options: options,
                     target: element,
+                    input: inputElement,
                     lang: this.lang
                 }
             });
