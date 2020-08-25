@@ -5,8 +5,6 @@
 
 A bundle to provide frontend date- and timepicker using [flatpickr.js](https://flatpickr.js.org).
 
-> Beta. Currently only works with [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle) or [Contao Filter Bundle](https://github.com/heimrichhannot/contao-filter-bundle).
-
 ## Features
 * show date- or timepicker in frontend forms
 * dynamic language file loading using webpack dynamic import
