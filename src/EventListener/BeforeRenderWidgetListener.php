@@ -12,6 +12,7 @@
 namespace HeimrichHannot\ContaoFlatpickrBundle\EventListener;
 
 
+use Contao\System;
 use HeimrichHannot\TwigTemplatesBundle\Twig\FormTemplate;
 use HeimrichHannot\TwigTemplatesBundle\Event\BeforeRenderTwigTemplateEvent;
 use Twig\Environment;
@@ -65,6 +66,7 @@ class BeforeRenderWidgetListener
 					break;
 			}
 		}
+
 		if (!$datepicker && $timepicker)
 		{
 			$timepickerOnly = true;
@@ -96,7 +98,7 @@ class BeforeRenderWidgetListener
 			}
 			if (is_string($key))
 			{
-				$attributes .= $key.'="'.$value.'"';
+				$attributes .= $key.'='.$value;
 			}
 			else {
 				$attributes .= $value;
@@ -124,7 +126,9 @@ class BeforeRenderWidgetListener
 			'picker' => $pickerType,
 		]);
 
-		if (isset($templateData['arrConfiguration']['prependDatePicker']) && $templateData['arrConfiguration']['prependDatePicker'] === true) {
+		if ((isset($templateData['arrConfiguration']['prependDatePicker']) && $templateData['arrConfiguration']['prependDatePicker'] === true)
+            || (isset($templateData['arrConfiguration']['flatpickr']['options']['prependDatePicker'])
+                && $templateData['arrConfiguration']['flatpickr']['options']['prependDatePicker'] === true )) {
 			$pickerPosition = 'inputPrepend';
 		}
 		if (!isset($templateData['arrConfiguration'][$pickerPosition]))
@@ -136,20 +140,27 @@ class BeforeRenderWidgetListener
 
 	protected function generateAttributes(array &$attributes, array $config, bool $datepicker, bool $timepicker)
 	{
-		if (isset($config['minDate']))
+		if (isset($config['minDate']) && !($config['flatpickr']['active'] && isset($config['flatpickr']['options']['minDate'])))
 		{
 			$attributes['data-min-date'] = $config['minDate'];
 		}
-		if (isset($config['maxDate']))
+
+		if (isset($config['maxDate']) && !($config['flatpickr']['active'] && isset($config['flatpickr']['options']['maxDate'])))
 		{
 			$attributes['data-max-date'] = $config['maxDate'];
 		}
 
-		if ($timepicker)
+        if (isset($config['enableAmPm']) && ($config['enableAmPm'] === true) && !( $config['flatpickr']['active'] && isset($config['flatpickr']['options']['enableAmPm'])))
+        {
+            $attributes['enableAmPm'] = true;
+        }
+
+		if ($timepicker && !($config['flatpickr']['active'] && $config['flatpickr']['options']['enableTime']))
 		{
 			$attributes['data-enable-time'] = true;
 		}
-		if (!$datepicker) {
+
+		if (!$datepicker && !($config['flatpickr']['active'] && $config['flatpickr']['options']['noCalendar'])) {
 			$attributes['data-no-calendar'] = true;
 		}
 
@@ -161,11 +172,20 @@ class BeforeRenderWidgetListener
 		elseif (!$datepicker && $timepicker) {
 			$dateFormat = $GLOBALS['TL_CONFIG']['timeFormat'];
 		}
-		$attributes['data-date-format'] = $dateFormat;
 
-		if ($config['enableAmPm'] === true)
-		{
-			$attributes['enableAmPm'] = true;
-		}
+        if (!isset($config['flatpickr']) && !$config['flatpickr']['active'])
+        {
+            $attributes['data-date-format'] = $dateFormat;
+            $attributes['data-iso8601-format'] = System::getContainer()->get('huh.utils.date')->transformPhpDateFormatToISO8601($dateFormat);
+        } elseif($config['flatpickr']['active']) {
+            $config['flatpickr']['options']['dateFormat'] = $dateFormat;
+            $config['flatpickr']['options']['dateFormatIso8601'] = System::getContainer()->get('huh.utils.date')->transformPhpDateFormatToISO8601($dateFormat);
+        }
+
+        if (isset($config['flatpickr']) && $config['flatpickr']['active'])
+        {
+            $attributes['data-flatpickr'] = json_encode($config['flatpickr']['options'], true);
+        }
+
 	}
 }

@@ -1,0 +1,24 @@
+.flatpickr {
+  .outer-increment-plus,
+  .outer-increment-minus {
+    padding: .5rem;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    &:after {
+      height: 100%;
+      padding: .25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .outer-increment-plus {
+    margin-left: .25rem;
+  }
+
+  .outer-increment-minus {
+    margin-right: .25rem;
+  }
+}

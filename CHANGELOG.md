@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2020-09-21
+- added increment/decrement buttons to flatpickr instance
+- added theme encore entry
+- added moment.js dependency
+- refactored BeforeRenderWidgetListener to function with field.eval.flatpickr.options
+- refactored contao-flatpickr-bundle.js to function with field.eval.flatpickr.options
+
 ## [1.0.1] - 2020-07-17
 - fixed encore entry definition
 

@@ -24,12 +24,22 @@ To add flatpickr to an input, set datepicker for your fields in dca to true. You
 
 Following additional evaluation fields are added to configure flatpickr:
 
-Option            | Type   | Default | Description
------------------ | ------ | ------- | -----------
-minDate           | string |         | A formatted date/time constraining the date/time picker to a certain minimum date/time.
-maxDate           | string |         | A formatted date/time constraining the date/time picker to a certain maximum date/time.
-prependDatePicker | bool   | false   | Prepend date picker button instead of append it.
-enableAmPm        | bool   | false   | Display a AM/PM selector instead of using 24 hr format.
+Option                                              | Type   | Default | Description
+--------------------------------------------------- | ------ | ------- | -----------
+field.eval.minDate                                  | string |         | A formatted date/time constraining the date/time picker to a certain minimum date/time.
+field.eval.maxDate                                  | string |         | A formatted date/time constraining the date/time picker to a certain maximum date/time.
+field.eval.prependDatePicker                        | bool   | false   | Prepend date picker button instead of append it.
+field.eval.enableAmPm                               | bool   | false   | Display a AM/PM selector instead of using 24 hr format.
+field.eval.flatpickr                                | array  |         | Configuration of additional flatpickr options, implemented only by this bundle
+field.eval.flatpickr.active                         | bool   | false   | Activate additional flatpickr configuration
+field.eval.flatpickr.options                        | array  |         | Additional configuration options
+field.eval.flatpickr.options.incrementArrows        | array  |         | Append and prepend arrow buttons to increment/decrement date/time by defined amount
+field.eval.flatpickr.options.incrementArrows.unit   | string |         | Unit of time to increment/decrement by. Possible values: years, months, days, hours, minutes, seconds
+field.eval.flatpickr.options.incrementArrows.amount | int    |         | The value of time to increment/decrement by.
+field.eval.flatpickr.options.minDate                | string |         | A formatted date/time constraining the date/time picker to a certain minimum date/time.
+field.eval.flatpickr.options.maxDate                | string |         | A formatted date/time constraining the date/time picker to a certain maximum date/time.
+field.eval.flatpickr.options.prependDatePicker      | bool   | false   | Prepend date picker button instead of append it.
+field.eval.flatpickr.options.enableAmPm             | bool   | false   | Display a AM/PM selector instead of using 24 hr format.
 
 ## Developers
 
