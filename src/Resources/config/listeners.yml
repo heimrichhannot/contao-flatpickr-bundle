@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    public: true
+    autowire: true
+
+    # Hook Listener
+  HeimrichHannot\FlatpickrBundle\EventListener\GetAttributesFromDcaListener: ~
+  HeimrichHannot\FlatpickrBundle\EventListener\BeforeRenderWidgetListener:
+    tags:
+      - { name: kernel.event_listener, event: huh.twig.beforeRenderTemplate }

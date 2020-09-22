@@ -1,104 +1,51 @@
-import flatpickr from "flatpickr";
-import moment from "moment";
-require('flatpickr/dist/flatpickr.css');
+import flatpickr from 'flatpickr';
+import moment from 'moment';
 
 class FlatpickrBundle
 {
-    constructor(selector)
+    static init()
     {
-        this.elements = document.querySelectorAll(selector);
-        this.defaultConfig = {
-            wrap: true,
-            time_24hr: true,
-            allowInput: true
-        };
-        this.lang = document.querySelector('html').getAttribute('lang');
+        let flatpickrFields = document.querySelectorAll('input[data-flatpickr-active="1"]');
+        flatpickrFields.forEach((element, key, parent) => {
+            let flatpickrOptions = JSON.parse(element.dataset.flatpickr);
 
-        import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + this.lang + '.js').then((locale) =>
-        {
-            flatpickr.localize(locale.default[this.lang]);
-            this.createFlatpickrInstances();
+            let lang = document.querySelector('html').getAttribute('lang');
 
-        }).catch(() => {
-            this.createFlatpickrInstances()
-        });
+            import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + lang + '.js').then((locale) =>
+                {
+                    flatpickr.localize(locale.default[lang]);
+                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
+
+                }).catch(() => {
+                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions)
+                });
+        })
     }
 
-    createFlatpickrInstances()
+    static createFlatpickrInstance(element, options)
     {
-        if (!this.elements)
-        {
-            return;
+        let parent = element.parentElement
+
+        if ( typeof options.incrementArrows !== 'undefined') {
+            FlatpickrBundle.createFlatpickrIncrementButtons(options, element);
         }
-        this.elements.forEach((element, key, parent) => {
-            let options = Object.assign({}, this.defaultConfig);
-            let inputElement = element.querySelector('input[type="text"]');
-            if (inputElement.dataset !== undefined)
-            {
-                let flatpickrOptions = JSON.parse(inputElement.dataset.flatpickr);
 
-                if ( typeof flatpickrOptions.dateFormat !== 'undefined' ) {
-                    options.dateFormat = flatpickrOptions.dateFormat;
-                } else if ( typeof inputElement.dataset.dateFormat !== 'undefined' ) {
-                    options.dateFormat = inputElement.dataset.dateFormat;
-                }
-
-                if ( typeof flatpickrOptions.dateFormatIso8601 !== 'undefined' ) {
-                    options.dateFormatIso8601 = flatpickrOptions.dateFormatIso8601;
-                } else if ( typeof inputElement.dataset.dateFormatIso8601 !== 'undefined') {
-                    options.dateFormatIso8601 = inputElement.dataset.dateFormatIso8601;
-                }
-
-                if (flatpickrOptions.enableTime === true || inputElement.dataset.enableTime === '1'){
-                    options.enableTime = true
-                }
-
-                if ((flatpickrOptions.noCalendar === true) || (inputElement.dataset.noCalendar === '1')) {
-                    options.noCalendar = true;
-                }
-
-                if ( typeof flatpickrOptions.minDate !== 'undefined') {
-                    options.minDate = flatpickrOptions.minDate;
-                } else if (typeof inputElement.dataset.minDate !== 'undefined') {
-                    options.minDate = inputElement.dataset.minDate;
-                }
-
-                if ( typeof flatpickrOptions.maxDate !== 'undefined') {
-                    options.maxDate = flatpickrOptions.maxDate;
-                } else if (typeof inputElement.dataset.maxDate !== 'undefined') {
-                    options.maxDate = inputElement.dataset.maxDate;
-                }
-
-                if ( flatpickrOptions.enableAmPm === true ) {
-                    options.time_24hr = false;
-                } else if (inputElement.dataset.enableAmPm === '1') {
-                    options.time_24hr = false;
-                }
-
-                if ( typeof flatpickrOptions.incrementArrows !== 'undefined') {
-                    options.incrementArrows = flatpickrOptions.incrementArrows;
-                    this.createFlatpickrIncrementButtons(options, inputElement);
-                }
-
+        let event = new CustomEvent('huh.flatpickr.prepare', {
+            bubbles: true,
+            cancelable: true,
+            detail: {
+                options: options,
+                target: element,
+                lang: document.querySelector('html').getAttribute('lang')
             }
-
-            let event = new CustomEvent('huh.flatpickr.event.prepare', {
-                bubbles: true,
-                cancelable: true,
-                detail: {
-                    options: options,
-                    target: element,
-                    input: inputElement,
-                    lang: this.lang
-                }
-            });
-            element.dispatchEvent(event);
-            flatpickr(element, options);
         });
+        element.dispatchEvent(event);
+
+        flatpickr(parent, options);
     }
 
     // returns array of html elements
-    createFlatpickrIncrementButtons(options, element) {
+    static createFlatpickrIncrementButtons(options, element) {
         let before = document.createElement('a'),
             after = document.createElement('a');
 
@@ -116,19 +63,18 @@ class FlatpickrBundle
         after.setAttribute('data-parent', element.id);
 
         before.addEventListener('click', (e) => {
-            element.value = this.calculateNewDate(options, element.value, 'minus');
+            element.value = FlatpickrBundle.calculateNewDate(options, element.value, 'minus');
         })
 
         after.addEventListener('click', (e) => {
-            element.value = this.calculateNewDate(options, element.value, 'plus');
+            element.value = FlatpickrBundle.calculateNewDate(options, element.value, 'plus');
         })
 
-        element.parentElement.appendChild(after);
-        element.parentElement.insertBefore(before, element);
-
+        element.parentNode.insertBefore(after, element.nextSibling);
+        element.parentNode.insertBefore(before, element);
     }
 
-    calculateNewDate(options, currentDate, operation) {
+    static calculateNewDate(options, currentDate, operation) {
         let unit = options.incrementArrows.unit;
         let amount = options.incrementArrows.amount;
         let format = options.dateFormatIso8601;
@@ -153,10 +99,5 @@ class FlatpickrBundle
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    new FlatpickrBundle('.flatpickr');
-});
+export { FlatpickrBundle };
 
-document.addEventListener('formhybrid_ajax_complete', function() {
-    new FlatpickrBundle('.flatpickr');
-});

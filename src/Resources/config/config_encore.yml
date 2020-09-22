@@ -1,11 +1,10 @@
 huh_encore:
-  encore:
-    entries:
-      - { name: "contao-flatpickr-bundle", requiresCss: true, head: false, file: "vendor/heimrichhannot/contao-flatpickr-bundle/src/Resources/assets/js/contao-flatpickr-bundle.js" }
-      - { name: "contao-flatpickr-bundle-theme", requiresCss: true, head: false, file: "vendor/heimrichhannot/contao-flatpickr-bundle/src/Resources/assets/js/contao-flatpickr-bundle-theme.js" }
-    legacy:
-      js:
-        - flatpickr
-        - contao-flatpickr-bundle
-      css:
-        - flatpickr
+  js_entries:
+    - { name: "contao-flatpickr-bundle", file: "vendor/heimrichhannot/contao-flatpickr-bundle/src/Resources/assets/js/contao-flatpickr-bundle-init.js" }
+    - { name: "contao-flatpickr-bundle-theme", requires_css: true, file: "vendor/heimrichhannot/contao-flatpickr-bundle/src/Resources/assets/js/contao-flatpickr-bundle-theme.js" }
+  unset_global_keys:
+    js:
+      - contao-flatpickr-bundle
+      - contao-flatpickr-bundle--library
+    css:
+      - contao-flatpuckr-bundle
