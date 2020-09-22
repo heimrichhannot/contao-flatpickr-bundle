@@ -8,61 +8,43 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-
-namespace HeimrichHannot\ContaoFlatpickrBundle\ContaoManager;
-
+namespace HeimrichHannot\FlatpickrBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
-use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
-use Contao\ManagerPlugin\Config\ContainerBuilder;
-use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
-use HeimrichHannot\ContaoFlatpickrBundle\HeimrichHannotContaoFlatpickrBundle;
-use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
+use HeimrichHannot\FlatpickrBundle\HeimrichHannotFlatpickrBundle;
+use HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-class Plugin implements BundlePluginInterface, ExtensionPluginInterface, ConfigPluginInterface
+class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
 
-	/**
-	 * Gets a list of autoload configurations for this bundle.
-	 *
-	 * @return ConfigInterface[]
-	 */
+    /**
+     * {@inheritdoc}
+     */
 	public function getBundles(ParserInterface $parser)
 	{
+        $loadAfter = [ContaoCoreBundle::class];
+
+        if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
+            $loadAfter[] = HeimrichHannotContaoEncoreBundle::class;
+        }
+
 		return [
-			BundleConfig::create(HeimrichHannotContaoFlatpickrBundle::class)->setLoadAfter([
-				ContaoCoreBundle::class,
-			]),
+			BundleConfig::create(HeimrichHannotFlatpickrBundle::class)->setLoadAfter($loadAfter),
 		];
 	}
 
-	/**
-	 * Allows a plugin to override extension configuration.
-	 *
-	 * @param string $extensionName
-	 *
-	 * @return array<string,mixed>
-	 */
-	public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
-	{
-		return ContainerUtil::mergeConfigFile(
-			'huh_encore',
-			$extensionName,
-			$extensionConfigs,
-			__DIR__.'/../Resources/config/config_encore.yml'
-		);
-	}
-
-	/**
-	 * Allows a plugin to load container configuration.
-	 */
 	public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
 	{
-		$loader->load('@HeimrichHannotContaoFlatpickrBundle/Resources/config/services.yml');
+        if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
+            $loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/config_encore.yml');
+        }
+
+		$loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/services.yml');
+		$loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/listeners.yml');
 	}
 }
