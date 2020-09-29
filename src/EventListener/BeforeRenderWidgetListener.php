@@ -7,22 +7,30 @@
 
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
+use HeimrichHannot\TwigSupportBundle\Filesystem\TwigTemplateLocator;
 use HeimrichHannot\TwigTemplatesBundle\Event\BeforeRenderTwigTemplateEvent;
 use Twig\Environment;
 
 class BeforeRenderWidgetListener
 {
+    const FLATPICKR_BTN_TEMPLATE_DEFAULT = "btn_datepicker";
+
     /**
      * @var Environment
      */
     private $twig;
+    /**
+     * @var TwigTemplateLocator
+     */
+    private $templateLocator;
 
     /**
      * BeforeRenderWidgetListener constructor.
      */
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, TwigTemplateLocator $templateLocator)
     {
         $this->twig = $twig;
+        $this->templateLocator = $templateLocator;
     }
 
     public function onHuhTwigBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
@@ -63,7 +71,7 @@ class BeforeRenderWidgetListener
                 break;
         }
 
-        $picker = $this->twig->render("@HeimrichHannotFlatpickr/forms/partials/btn_datepicker.html.twig", [
+        $picker = $this->twig->render($this->getFlatpickrBtnTemplate($templateData['arrConfiguration']['flatpickr']), [
             'picker' => $type,
         ]);
 
@@ -78,4 +86,19 @@ class BeforeRenderWidgetListener
         }
         $templateData['arrConfiguration'][$pickerPosition] .= $picker;
     }
+
+    /**
+     *
+     *
+     * @param array $config
+     * @return string
+     * @throws \HeimrichHannot\TwigSupportBundle\Exception\TemplateNotFoundException
+     */
+    protected function getFlatpickrBtnTemplate(array $config)
+    {
+        $templateName = $config['options']['customBtnTpl'] ?:self::FLATPICKR_BTN_TEMPLATE_DEFAULT;
+
+        return $this->templateLocator->getTemplatePath($templateName);
+    }
+
 }

@@ -21,6 +21,7 @@ $dca['fields']['useFlatpickrForDatepicker'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 
+
 \Contao\System::getContainer()->get('huh.utils.dca')->addOverridableFields(
     ['useFlatpickrForDatepicker'],
     $table,

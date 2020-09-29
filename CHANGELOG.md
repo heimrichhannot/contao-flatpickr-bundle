@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2020-09-29
+- added customizable flatpickr button template
+
 ## [2.0.0] - 2020-09-22
 - refactored to use `GetAttributesFromDcaListener` event to parse dca configuration to frontend as data attributes
 - refactored js dependencies

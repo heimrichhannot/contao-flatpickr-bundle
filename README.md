@@ -33,6 +33,7 @@ field.eval.flatpickr.options.minDate                | string |         | A forma
 field.eval.flatpickr.options.maxDate                | string |         | A formatted date/time constraining the date/time picker to a certain maximum date/time.
 field.eval.flatpickr.options.prependDatePicker      | bool   | false   | Prepend date picker button instead of append it.
 field.eval.flatpickr.options.enableAmPm             | bool   | false   | Display a AM/PM selector instead of using 24 hr format.
+field.eval.flatpickr.options.customBtnTpl           | string |         | Bet custom template for flatpickr button. Type in template name (eg. btn_datepicker)
 
 #### Example
 ```php
