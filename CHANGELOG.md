@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2020-09-29
+- added huh_filter support
+- capsuled retrieval of flatpickr config for frontend field in util
+
 ## [2.0.1] - 2020-09-29
 - added customizable flatpickr button template
 
