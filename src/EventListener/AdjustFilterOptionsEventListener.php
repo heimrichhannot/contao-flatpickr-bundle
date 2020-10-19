@@ -16,24 +16,34 @@ class AdjustFilterOptionsEventListener
      * @var FlatpickrUtil
      */
     private $flatpickrUtil;
+    /**
+     * @var Environment
+     */
+    private $twig;
 
     public function __construct(
-        FlatpickrUtil $flatpickrUtil
+        FlatpickrUtil $flatpickrUtil,
+        Environment $twig
     ) {
-        $this->flatpickrUtil   = $flatpickrUtil;
+        $this->flatpickrUtil = $flatpickrUtil;
+        $this->twig          = $twig;
     }
 
     public function __invoke(AdjustFilterOptionsEvent $event)
     {
-        if(empty($attributes = $this->getFlatpickrAttributes($event))) {
+        if (empty($attributes = $this->getFlatpickrAttributes($event))) {
             return;
         }
 
-        $options          = $event->getOptions();
-        $options['attr']  = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($attributes));
+        $options         = $event->getOptions();
+        $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($attributes));
+        $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
+
+        $this->flatpickrUtil->compilePicker($attributes, $options, $inputPosition);
 
         $event->setOptions($options);
     }
+
 
     /**
      * get flatpickr attribute config from dca field configuration

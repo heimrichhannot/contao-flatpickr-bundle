@@ -7,6 +7,7 @@
 
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
+use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
 use HeimrichHannot\TwigSupportBundle\Filesystem\TwigTemplateLocator;
 use HeimrichHannot\TwigTemplatesBundle\Event\BeforeRenderTwigTemplateEvent;
 use Twig\Environment;
@@ -23,68 +24,39 @@ class BeforeRenderWidgetListener
      * @var TwigTemplateLocator
      */
     private $templateLocator;
+    /**
+     * @var FlatpickrUtil
+     */
+    private $flatpickrUtil;
 
     /**
      * BeforeRenderWidgetListener constructor.
      */
-    public function __construct(Environment $twig, TwigTemplateLocator $templateLocator)
+    public function __construct(Environment $twig, TwigTemplateLocator $templateLocator, FlatpickrUtil $flatpickrUtil)
     {
-        $this->twig = $twig;
+        $this->twig            = $twig;
         $this->templateLocator = $templateLocator;
+        $this->flatpickrUtil   = $flatpickrUtil;
     }
 
     public function onHuhTwigBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
     {
         $config = $event->getTemplateData()['arrConfiguration'];
-        if ('text' !== $config['type'])
-        {
+        if ('text' !== $config['type']) {
             return;
         }
-        if (!isset($config['datepicker']) || !$config['datepicker'])
-        {
+        if (!isset($config['datepicker']) || !$config['datepicker']) {
             return;
         }
 
         $templateData = $event->getTemplateData();
 
-        if ($templateData['arrConfiguration']['flatpickr']['active'] === true){
-            $this->compilePicker($templateData);
+        if ($config['flatpickr']['active'] === true) {
+            $inputPosition = $templateData['arrConfiguration']['flatpickr']['options']['prependPicker'] ? 'inputPrepend' : 'inputAppend';
+            $this->flatpickrUtil->compilePicker($config, $templateData['arrConfiguration'],
+                $inputPosition);
         }
         $event->setTemplateData($templateData);
-    }
-
-    /**
-     * @param array $templateData
-     *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    protected function compilePicker(array &$templateData): void
-    {
-        switch ($templateData['arrConfiguration']['rgxp']) {
-            case 'time':
-                $type = 'timepicker';
-                break;
-            default:
-                $type = 'datepicker';
-                break;
-        }
-
-        $picker = $this->twig->render($this->getFlatpickrBtnTemplate($templateData['arrConfiguration']['flatpickr']), [
-            'picker' => $type,
-        ]);
-
-        $pickerPosition = 'inputAppend';
-        if (isset($templateData['arrConfiguration']['flatpickr']['options']['prependDatePicker']) && $templateData['arrConfiguration']['prependDatePicker'] === true) {
-            $pickerPosition = 'inputPrepend';
-        }
-
-        if (!isset($templateData['arrConfiguration'][$pickerPosition]))
-        {
-            $templateData['arrConfiguration'][$pickerPosition] = '';
-        }
-        $templateData['arrConfiguration'][$pickerPosition] .= $picker;
     }
 
     /**
@@ -96,7 +68,7 @@ class BeforeRenderWidgetListener
      */
     protected function getFlatpickrBtnTemplate(array $config)
     {
-        $templateName = $config['options']['customBtnTpl'] ?:self::FLATPICKR_BTN_TEMPLATE_DEFAULT;
+        $templateName = $config['options']['customBtnTpl'] ?: self::FLATPICKR_BTN_TEMPLATE_DEFAULT;
 
         return $this->templateLocator->getTemplatePath($templateName);
     }

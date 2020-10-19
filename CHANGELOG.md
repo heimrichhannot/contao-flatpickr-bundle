@@ -1,7 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [2.1.0] - 2020-09-29
+## [2.1.1] - 2020-10-19
+- changed compile of picker button is now moved into `FlatpickrUtil`
+
+## [2.1.0] - 2020-10-16
 - added huh_filter support
 - capsuled retrieval of flatpickr config for frontend field in util
 
