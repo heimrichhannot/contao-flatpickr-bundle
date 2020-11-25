@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.1.2] - 2020-11-25
+- added support for `formhybrid_ajax_complete` event from contao-formhybrid-compatibility-bundle
+
 ## [2.1.1] - 2020-10-19
 - changed compile of picker button is now moved into `FlatpickrUtil`
 
