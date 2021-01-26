@@ -9,7 +9,6 @@
 namespace HeimrichHannot\FlatpickrBundle\Asset;
 
 use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FrontendAsset
 {
