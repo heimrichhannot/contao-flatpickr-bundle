@@ -31,15 +31,22 @@ class AdjustFilterOptionsEventListener
 
     public function __invoke(AdjustFilterOptionsEvent $event)
     {
-        if (empty($attributes = $this->getFlatpickrAttributes($event))) {
+
+        if (empty($attributes = $this->getFlatpickrAttributes($event)) && !(bool)$event->getElement()->addFlatpickrSupport) {
             return;
         }
 
-        $options         = $event->getOptions();
-        $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($attributes));
-        $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
+        $options = $event->getOptions();
 
+        if (empty($options['attr']['flatpickr'])) {
+            return;
+        }
+
+        $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($options['attr']));
+        $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
         $this->flatpickrUtil->compilePicker($attributes, $options, $inputPosition);
+
+        $options['attr']['flatpickr']['options'] = serialize($options['attr']['flatpickr']['options']);
 
         $event->setOptions($options);
     }
