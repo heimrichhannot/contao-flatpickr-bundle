@@ -8,4 +8,10 @@
  * @license http://www.gnu.org/licences/lgpl-3.0.html LGPL
  */
 
-$GLOBALS['TL_HOOKS']['getAttributesFromDca']['flatpickr'] = [\HeimrichHannot\FlatpickrBundle\EventListener\GetAttributesFromDcaListener::class, 'onGetAttributesFromDca'];
+$GLOBALS['TL_HOOKS']['getAttributesFromDca']['huh_flatpickr'] = [
+    \HeimrichHannot\FlatpickrBundle\EventListener\GetAttributesFromDcaListener::class, 'onGetAttributesFromDca'
+];
+
+$GLOBALS['TL_HOOKS']['loadDataContainer']['huh_flatpickr'] = [
+    \HeimrichHannot\FlatpickrBundle\EventListener\LoadDataContainerListener::class, 'onLoadDataContainer',
+];

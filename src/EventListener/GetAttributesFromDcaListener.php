@@ -9,12 +9,7 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 
 use Contao\DataContainer;
-use Contao\PageModel;
-use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
-use HeimrichHannot\FlatpickrBundle\Event\CustomizeFlatpickrOptionsEvent;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
-use Psr\Container\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GetAttributesFromDcaListener
 {

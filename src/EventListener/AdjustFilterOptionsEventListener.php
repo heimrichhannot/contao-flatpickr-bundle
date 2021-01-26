@@ -5,9 +5,7 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 
 use HeimrichHannot\FilterBundle\Event\AdjustFilterOptionsEvent;
-use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
-use HeimrichHannot\TwigSupportBundle\Filesystem\TwigTemplateLocator;
 use Twig\Environment;
 
 class AdjustFilterOptionsEventListener

@@ -12,3 +12,5 @@ services:
   HeimrichHannot\FlatpickrBundle\EventListener\AdjustFilterOptionsEventListener:
     tags:
       - { name: kernel.event_listener, event: huh.filter.event.adjust_filter_options_event, method: '__invoke' }
+
+  HeimrichHannot\FlatpickrBundle\EventListener\LoadDataContainerListener:
