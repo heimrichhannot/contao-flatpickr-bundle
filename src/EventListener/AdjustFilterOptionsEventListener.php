@@ -34,10 +34,20 @@ class AdjustFilterOptionsEventListener
         }
 
         $options = $event->getOptions();
+        $element = $event->getElement();
 
-        if (empty($options['attr']['flatpickr']) && (bool)$event->getElement()->addFlatpickrSupport && in_array($event->getElement()->type, LoadDataContainerListener::FILTER_PALETTE_TYPES)) {
+        if (empty($options['attr']['flatpickr']) && (bool)$element->addFlatpickrSupport ) {
             $options['attr']['flatpickr']['active'] = true;
             $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
+
+            if($element->type === 'date_time' || $element->type === 'time') {
+                $options['attr']['flatpickr']['options']['enableTime'] = true;
+            }
+
+            if($element->type === 'time') {
+                $options['attr']['flatpickr']['options']['noCalendar'] = true;
+            }
+
             $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
             $options['attr']['type'] === 'text' ?: $options['attr']['type'] = 'text';
         }
