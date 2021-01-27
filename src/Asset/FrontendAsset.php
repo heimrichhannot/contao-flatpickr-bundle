@@ -9,11 +9,12 @@
 namespace HeimrichHannot\FlatpickrBundle\Asset;
 
 use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
+use HeimrichHannot\EncoreBundle\Asset\FrontendAsset as EncoreFrontendAsset;
 
 class FrontendAsset
 {
     /**
-     * @var \HeimrichHannot\EncoreBundle\Asset\FrontendAsset
+     * @var EncoreFrontendAsset
      */
     protected $encoreFrontendAsset;
 
@@ -30,7 +31,7 @@ class FrontendAsset
         $this->containerUtil = $containerUtil;
     }
 
-    public function setEncoreFrontendAsset(\HeimrichHannot\EncoreBundle\Asset\FrontendAsset $encoreFrontendAsset): void
+    public function setEncoreFrontendAsset(EncoreFrontendAsset $encoreFrontendAsset): void
     {
         $this->encoreFrontendAsset = $encoreFrontendAsset;
     }

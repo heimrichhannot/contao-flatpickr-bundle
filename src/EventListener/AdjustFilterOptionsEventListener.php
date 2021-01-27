@@ -36,8 +36,11 @@ class AdjustFilterOptionsEventListener
 
         $options = $event->getOptions();
 
-        if (empty($options['attr']['flatpickr'])) {
-            return;
+        if (empty($options['attr']['flatpickr']) && (bool)$event->getElement()->addFlatpickrSupport) {
+            $options['attr']['flatpickr']['active'] = true;
+            $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
+            $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
+            $options['attr']['type'] === 'text' ?: $options['attr']['type'] = 'text';
         }
 
         $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($options['attr']));

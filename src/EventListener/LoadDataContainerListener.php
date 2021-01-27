@@ -15,7 +15,7 @@ use HeimrichHannot\FilterBundle\Filter\Type\DateType;
 class LoadDataContainerListener
 {
 
-    public function onLoadDataContainer(string $table): void
+    public function __invoke(string $table): void
     {
         switch ($table) {
             case 'tl_filter_config_element':
