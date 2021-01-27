@@ -15,6 +15,16 @@ use HeimrichHannot\FilterBundle\Filter\Type\DateType;
 class LoadDataContainerListener
 {
 
+    const DATE_TYPE = DateType::TYPE;
+    const DATE_TIME_TYPE = DateTimeType::TYPE;
+    const TIME_TYPE = 'time';
+
+    const FILTER_PALETTE_TYPES = [
+        self::DATE_TYPE,
+        self::DATE_TIME_TYPE,
+        self::TIME_TYPE
+    ];
+
     public function __invoke(string $table): void
     {
         switch ($table) {
@@ -42,9 +52,7 @@ class LoadDataContainerListener
             'sql' => "char(1) NOT NULL default ''",
         ];
 
-        $palettes = [DateType::TYPE, DateTimeType::TYPE, 'time'];
-
-        foreach ($palettes as $palette) {
+        foreach (static::FILTER_PALETTE_TYPES as $palette) {
 
             PaletteManipulator::create()
                 ->addField('addFlatpickrSupport', 'visualization_legend', PaletteManipulator::POSITION_APPEND)

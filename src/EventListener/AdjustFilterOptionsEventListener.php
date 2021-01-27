@@ -3,7 +3,6 @@
 
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
-
 use HeimrichHannot\FilterBundle\Event\AdjustFilterOptionsEvent;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
 use Twig\Environment;
@@ -36,7 +35,7 @@ class AdjustFilterOptionsEventListener
 
         $options = $event->getOptions();
 
-        if (empty($options['attr']['flatpickr']) && (bool)$event->getElement()->addFlatpickrSupport) {
+        if (empty($options['attr']['flatpickr']) && (bool)$event->getElement()->addFlatpickrSupport && in_array($event->getElement()->type, LoadDataContainerListener::FILTER_PALETTE_TYPES)) {
             $options['attr']['flatpickr']['active'] = true;
             $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
             $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
