@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2021-01-29
+- added support for non-dca fields with default flatpickr options (#1)
+
 ## [2.1.2] - 2020-11-25
 - added support for `formhybrid_ajax_complete` event from contao-formhybrid-compatibility-bundle
 
