@@ -6,11 +6,9 @@ class FlatpickrBundle
     static init()
     {
         let flatpickrFields = document.querySelectorAll('input[data-flatpickr-active="1"]');
-
         flatpickrFields.forEach((element, key, parent) => {
             let flatpickrOptions = JSON.parse(element.dataset.flatpickr);
             let lang = document.querySelector('html').getAttribute('lang');
-
             import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + lang + '.js').then((locale) =>
                 {
                     flatpickr.localize(locale.default[lang]);

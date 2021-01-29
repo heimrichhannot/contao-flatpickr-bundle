@@ -8,5 +8,9 @@ services:
   HeimrichHannot\FlatpickrBundle\Manager\FlatpickrManager: '@huh.flatpickr.manager.flatpickr_manager'
 
   HeimrichHannot\FlatpickrBundle\:
-    resource: "../../{Asset,Util}/*"
+    resource: "../../{Util}/*"
     autoconfigure: true
+
+  HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset:
+    calls:
+      - [ setEncoreFrontendAsset, [ '@?HeimrichHannot\EncoreBundle\Asset\FrontendAsset' ] ]

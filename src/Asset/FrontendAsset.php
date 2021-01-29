@@ -8,36 +8,55 @@
 
 namespace HeimrichHannot\FlatpickrBundle\Asset;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
+use HeimrichHannot\EncoreBundle\Asset\FrontendAsset as EncoreFrontendAsset;
 
 class FrontendAsset
 {
     /**
-     * @var ContainerInterface
+     * @var EncoreFrontendAsset
      */
-    private $container;
+    protected $encoreFrontendAsset;
+
+    /**
+     * @var ContainerUtil
+     */
+    protected $containerUtil;
 
     /**
      * FrontendAsset constructor.
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerUtil $containerUtil)
     {
-        $this->container = $container;
+        $this->containerUtil = $containerUtil;
+    }
+
+    public function setEncoreFrontendAsset(EncoreFrontendAsset $encoreFrontendAsset): void
+    {
+        $this->encoreFrontendAsset = $encoreFrontendAsset;
     }
 
     public function addFrontendAssets()
     {
-        if (!$this->container->get('huh.utils.container')->isFrontend()) {
+        if (!$this->containerUtil->isFrontend()) {
             return;
         }
 
-        if ($this->container->has('huh.encore.asset.frontend')) {
-            $this->container->get('huh.encore.asset.frontend')->addActiveEntrypoint('contao-flatpickr-bundle');
-            $this->container->get('huh.encore.asset.frontend')->addActiveEntrypoint('contao-flatpickr-bundle-theme');
+        if ($this->encoreFrontendAsset) {
+
+            if(!$this->encoreFrontendAsset->isActiveEntrypoint('contao-flatpickr-bundle')) {
+                $this->encoreFrontendAsset->addActiveEntrypoint('contao-flatpickr-bundle');
+            }
+
+            if(!$this->encoreFrontendAsset->isActiveEntrypoint('contao-flatpickr-bundle-theme')) {
+                $this->encoreFrontendAsset->addActiveEntrypoint('contao-flatpickr-bundle-theme');
+            }
+
         }
 
         $GLOBALS['TL_CSS']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css';
         $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js';
         $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle-theme'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js';
+
     }
 }
