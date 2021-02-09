@@ -5,6 +5,6 @@ huh_encore:
   unset_global_keys:
     js:
       - contao-flatpickr-bundle
-      - contao-flatpickr-bundle--library
+      - contao-flatpickr-bundle-theme
     css:
-      - contao-flatpuckr-bundle
+      - contao-flatpuckr-bundle-theme

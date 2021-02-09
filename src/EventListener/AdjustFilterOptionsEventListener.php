@@ -37,7 +37,6 @@ class AdjustFilterOptionsEventListener
         $element = $event->getElement();
 
         if (empty($options['attr']['flatpickr']) && (bool)$element->addFlatpickrSupport ) {
-            $options['attr']['flatpickr']['active'] = true;
             $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
 
             if($element->type === 'date_time' || $element->type === 'time') {
@@ -56,8 +55,7 @@ class AdjustFilterOptionsEventListener
         $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
         $this->flatpickrUtil->compilePicker($attributes, $options, $inputPosition);
 
-        $options['attr']['flatpickr']['options'] = serialize($options['attr']['flatpickr']['options']);
-
+        unset($options['attr']['flatpickr']);
         $event->setOptions($options);
     }
 
