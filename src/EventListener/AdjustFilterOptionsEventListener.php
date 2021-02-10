@@ -49,15 +49,14 @@ class AdjustFilterOptionsEventListener
             }
 
             $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
-            $options['attr']['type'] === 'text' ?: $options['attr']['type'] = 'text';
+            $options['attr']['type'] = 'text';
         }
 
         $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($options['attr']));
         $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
         $this->flatpickrUtil->compilePicker($attributes, $options, $inputPosition);
 
-        $options['attr']['flatpickr']['options'] = serialize($options['attr']['flatpickr']['options']);
-
+        unset($options['attr']['flatpickr']);
         $event->setOptions($options);
     }
 

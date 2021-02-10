@@ -52,7 +52,7 @@ class FlatpickrManager
         $options = [];
         $dca = &$GLOBALS['TL_DCA'][$table];
 
-        if (isset($dca['fields'][$field]['eval']['flatpickr']) && \is_array($dca['fields'][$field]['eval']['flatpickr'])) {
+        if ( isset($dca['fields'][$field]['eval']['flatpickr']['options']) && \is_array($dca['fields'][$field]['eval']['flatpickr']['options'])) {
             $options = $dca['fields'][$field]['eval']['flatpickr']['options'];
         }
 

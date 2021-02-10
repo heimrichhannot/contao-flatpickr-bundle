@@ -15,11 +15,9 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
-use Contao\ManagerPlugin\Config\ContainerBuilder;
-use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
+use HeimrichHannot\FilterBundle\HeimrichHannotContaoFilterBundle;
 use HeimrichHannot\FlatpickrBundle\HeimrichHannotFlatpickrBundle;
 use HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle;
-use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class Plugin implements BundlePluginInterface, ConfigPluginInterface
@@ -28,12 +26,16 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     /**
      * {@inheritdoc}
      */
-	public function getBundles(ParserInterface $parser)
-	{
+    public function getBundles(ParserInterface $parser)
+    {
         $loadAfter = [ContaoCoreBundle::class];
 
         if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
             $loadAfter[] = HeimrichHannotContaoEncoreBundle::class;
+        }
+
+        if(class_exists('HeimrichHannot\FilterBundle\HeimrichHannotContaoFilterBundle')) {
+            $loadAfter[] = HeimrichHannotContaoFilterBundle::class;
         }
 
 		return [
@@ -41,8 +43,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
 		];
 	}
 
-	public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
-	{
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    {
         if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
             $loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/config_encore.yml');
         }
