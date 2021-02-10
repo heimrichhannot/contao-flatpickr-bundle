@@ -57,6 +57,5 @@ class FrontendAsset
         $GLOBALS['TL_CSS']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css';
         $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js';
         $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle-theme'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js';
-
     }
 }

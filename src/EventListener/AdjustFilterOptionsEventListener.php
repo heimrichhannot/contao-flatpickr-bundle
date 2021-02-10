@@ -37,6 +37,7 @@ class AdjustFilterOptionsEventListener
         $element = $event->getElement();
 
         if (empty($options['attr']['flatpickr']) && (bool)$element->addFlatpickrSupport ) {
+            $options['attr']['flatpickr']['active'] = true;
             $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
 
             if($element->type === 'date_time' || $element->type === 'time') {
