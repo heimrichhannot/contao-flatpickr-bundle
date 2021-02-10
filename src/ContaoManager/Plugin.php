@@ -26,8 +26,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     /**
      * {@inheritdoc}
      */
-	public function getBundles(ParserInterface $parser)
-	{
+    public function getBundles(ParserInterface $parser)
+    {
         $loadAfter = [ContaoCoreBundle::class];
 
         if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
@@ -43,8 +43,8 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
 		];
 	}
 
-	public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
-	{
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
+    {
         if (class_exists('HeimrichHannot\EncoreBundle\HeimrichHannotContaoEncoreBundle')) {
             $loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/config_encore.yml');
         }

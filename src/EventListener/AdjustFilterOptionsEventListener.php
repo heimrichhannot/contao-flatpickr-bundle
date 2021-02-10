@@ -49,7 +49,7 @@ class AdjustFilterOptionsEventListener
             }
 
             $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
-            $options['attr']['type'] === 'text' ?: $options['attr']['type'] = 'text';
+            $options['attr']['type'] = 'text';
         }
 
         $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($options['attr']));
