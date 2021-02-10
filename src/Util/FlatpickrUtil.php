@@ -75,7 +75,7 @@ class FlatpickrUtil
      */
     public function getFlatpickrAttributes(array $attributes, ?DataContainer $dc = null): array
     {
-        if (!isset($attributes['flatpickr']) || !$attributes['flatpickr']['active']) {
+        if (!isset($attributes['flatpickr']['active']) || !$attributes['flatpickr']['active']) {
             return [];
         }
 
