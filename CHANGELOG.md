@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2021-01-29
+- refactored flatpickrUtil and Manager, added translation (#5)
+
 ## [2.2.0] - 2021-01-29
 - added support for non-dca fields with default flatpickr options (#1)
 
