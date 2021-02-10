@@ -146,7 +146,7 @@ class FlatpickrUtil
             return;
         }
 
-        if (!empty($this->dcaUtil->getOverridableProperty('useFlatpickrForDatepicker', $this->getPageWithParents()))) {
+        if (!$this->dcaUtil->getOverridableProperty('useFlatpickrForDatepicker', $this->getPageWithParents())) {
             return;
         }
 

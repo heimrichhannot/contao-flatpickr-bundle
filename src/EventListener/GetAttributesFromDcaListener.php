@@ -35,6 +35,6 @@ class GetAttributesFromDcaListener
      */
     public function onGetAttributesFromDca(array $attributes, $dc = null): array
     {
-        return array_merge($attributes, $this->flatpickrUtil->getFlatpickrAttributes($attributes));
+        return array_merge($attributes, $this->flatpickrUtil->getFlatpickrAttributes($attributes, $dc));
     }
 }
