@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] - 2021-02-11
+- added support for `filterAjaxComplete` event from contao-filter-bundle
+
 ## [2.3.0] - 2021-01-29
 - refactored flatpickrUtil and Manager, added translation (#5)
 

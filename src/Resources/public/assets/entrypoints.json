@@ -2,7 +2,7 @@
   "entrypoints": {
     "contao-flatpickr-bundle": {
       "js": [
-        "/bundles/heimrichhannotflatpickr/assets/flatpickr.js",
+        "/bundles/heimrichhannotflatpickr/assets/index.js",
         "/bundles/heimrichhannotflatpickr/assets/moment.js",
         "/bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js"
       ]
