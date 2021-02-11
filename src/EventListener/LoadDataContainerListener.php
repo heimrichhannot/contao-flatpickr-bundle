@@ -42,7 +42,7 @@ class LoadDataContainerListener
             'sql' => "char(1) NOT NULL default ''",
         ];
 
-        $palettes = [DateType::TYPE, DateTimeType::TYPE, 'time'];
+        $palettes = [DateType::TYPE, DateTimeType::TYPE, 'time', 'text'];
 
         foreach ($palettes as $palette) {
 

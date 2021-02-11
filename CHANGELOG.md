@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.1] - 2021-02-11
+- added support for text filter element
+
 ## [2.4.0] - 2021-02-11
 - added support for `filterAjaxComplete` event from contao-filter-bundle
 
