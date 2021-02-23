@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.2] - 2021-02-23
+- fixed service definition for symfony 3.4
+
 ## [2.4.1] - 2021-02-11
 - added support for text filter element
 
