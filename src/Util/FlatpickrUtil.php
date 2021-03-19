@@ -73,7 +73,7 @@ class FlatpickrUtil
      * @param DataContainer|null $dc
      * @return array
      */
-    public function getFlatpickrAttributes(array $attributes, ?DataContainer $dc = null): array
+    public function getFlatpickrAttributes(array $attributes, $dc = null): array
     {
         if (!isset($attributes['flatpickr']['active']) || !$attributes['flatpickr']['active']) {
             return [];

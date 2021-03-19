@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.3] - 2021-03-19
+- fixed type hint for multi column wizard
+
 ## [2.4.2] - 2021-02-23
 - fixed service definition for symfony 3.4
 
