@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.4.4] - 2021-05-28
+- fixed missing twig-support-bundle dependency
+- fixed refactoring leftovers
+- use TwigTemplateRenderer instead Twig/Environment for renderer template rendering
+
 ## [2.4.3] - 2021-03-19
 - fixed type hint for multi column wizard
 

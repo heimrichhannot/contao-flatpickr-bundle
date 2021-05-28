@@ -10,14 +10,16 @@ use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
 use HeimrichHannot\FlatpickrBundle\Event\CustomizeFlatpickrOptionsEvent;
 use HeimrichHannot\FlatpickrBundle\Manager\FlatpickrManager;
 use HeimrichHannot\TwigSupportBundle\Filesystem\TwigTemplateLocator;
+use HeimrichHannot\TwigSupportBundle\Renderer\TwigTemplateRenderer;
+use HeimrichHannot\TwigSupportBundle\Renderer\TwigTemplateRendererConfiguration;
 use HeimrichHannot\UtilsBundle\Dca\DcaUtil;
 use HeimrichHannot\UtilsBundle\Model\ModelUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Twig\Environment;
 
 class FlatpickrUtil
 {
     const FLATPICKR_BTN_TEMPLATE_DEFAULT = "btn_datepicker";
+    protected TwigTemplateRenderer $twigTemplateRenderer;
 
     /**
      * @var ModelUtil
@@ -43,10 +45,6 @@ class FlatpickrUtil
      * @var TwigTemplateLocator
      */
     private $templateLocator;
-    /**
-     * @var Environment
-     */
-    private $twig;
 
     public function __construct(
         ModelUtil $modelUtil,
@@ -55,7 +53,7 @@ class FlatpickrUtil
         EventDispatcherInterface $eventDispatcher,
         FlatpickrManager $flatpickrManager,
         TwigTemplateLocator $templateLocator,
-        Environment $twig
+        TwigTemplateRenderer $twigTemplateRenderer
     ) {
         $this->modelUtil        = $modelUtil;
         $this->dcaUtil          = $dcaUtil;
@@ -63,7 +61,7 @@ class FlatpickrUtil
         $this->eventDispatcher  = $eventDispatcher;
         $this->flatpickrManager = $flatpickrManager;
         $this->templateLocator  = $templateLocator;
-        $this->twig             = $twig;
+        $this->twigTemplateRenderer = $twigTemplateRenderer;
     }
 
     /**
@@ -116,7 +114,9 @@ class FlatpickrUtil
         $template = $this->getFlatpickrBtnTemplate($attributes);
         $picker   = $this->getFlatpickrType($attributes);
 
-        $options[$inputPosition] = $this->twig->render($template, ['picker' => $picker]);
+        $rendererContext = (new TwigTemplateRendererConfiguration())->setTemplatePath($template);
+
+        $options[$inputPosition] = $this->twigTemplateRenderer->render($template, ['picker' => $picker], $rendererContext);
     }
 
 

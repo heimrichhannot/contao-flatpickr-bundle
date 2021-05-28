@@ -5,7 +5,6 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 use HeimrichHannot\FilterBundle\Event\AdjustFilterOptionsEvent;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
-use Twig\Environment;
 
 class AdjustFilterOptionsEventListener
 {
@@ -13,17 +12,10 @@ class AdjustFilterOptionsEventListener
      * @var FlatpickrUtil
      */
     private $flatpickrUtil;
-    /**
-     * @var Environment
-     */
-    private $twig;
 
-    public function __construct(
-        FlatpickrUtil $flatpickrUtil,
-        Environment $twig
-    ) {
+    public function __construct(FlatpickrUtil $flatpickrUtil)
+    {
         $this->flatpickrUtil = $flatpickrUtil;
-        $this->twig          = $twig;
     }
 
     public function __invoke(AdjustFilterOptionsEvent $event)
