@@ -35,6 +35,18 @@ field.eval.flatpickr.options.prependDatePicker      | bool   | false   | Prepend
 field.eval.flatpickr.options.enableAmPm             | bool   | false   | Display a AM/PM selector instead of using 24 hr format.
 field.eval.flatpickr.options.customBtnTpl           | string |         | Bet custom template for flatpickr button. Type in template name (eg. btn_datepicker)
 
+It is also possible to use plugins. Only one plugin is currently implemented: <b>monthSelectPlugin</b>
+Plugins can be activated over dca configuration:
+
+Option                                              | Type   | Default | Description
+--------------------------------------------------- | ------ | ------- | -----------
+field.eval.flatpickr.plugins.monthSelectPlugin      | array  |         | Configuration of additional flatpickr options, implemented only by this bundle
+
+the plugin configuration from https://flatpickr.js.org/plugins/#monthselectplugin is supported.
+
+It is also possible to disable months for each year with(<i>see example below</i>):
+field.eval.flatpickr.plugins.monthSelectPlugin.disabledMonths
+
 #### Example
 ```php
     'fieldName' => [
@@ -49,6 +61,13 @@ field.eval.flatpickr.options.customBtnTpl           | string |         | Bet cus
                         'amount' => 1,
                     ],
                 ],
+                'plugins' => [
+                    'monthSelectPlugin' => [
+                        'horthand' => true,
+                        'dateFormat' => "M Y",
+                        'disabledMonths' => [2021 => [0,3,6]]
+                    ]
+                ]
             ]
         ]
     ]

@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import moment from 'moment';
+import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index';
 
 class FlatpickrBundle
 {
@@ -9,15 +10,22 @@ class FlatpickrBundle
         flatpickrFields.forEach((element, key, parent) => {
             let flatpickrOptions = JSON.parse(element.dataset.flatpickr);
             let lang = document.querySelector('html').getAttribute('lang');
+            if (flatpickrOptions.hasOwnProperty('monthSelectPlugin') && flatpickrOptions.monthSelectPlugin) {
+                let selectMonthPluginOptions = JSON.parse(element.dataset.flatpickr).monthSelectPlugin;
+                flatpickrOptions.plugins = [
+                    new monthSelectPlugin(selectMonthPluginOptions)
+                ];
+            }
+
             import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + lang + '.js').then((locale) =>
                 {
                     flatpickr.localize(locale.default[lang]);
                     FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
 
                 }).catch(() => {
-                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions)
+                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
                 });
-        })
+        });
     }
 
     static createFlatpickrInstance(element, options)
@@ -39,7 +47,18 @@ class FlatpickrBundle
         });
         element.dispatchEvent(event);
 
-        flatpickr(parent, options);
+        const flatpickrInstance = flatpickr(parent, options);
+
+        if (options.hasOwnProperty('monthSelectPlugin') && options.monthSelectPlugin.hasOwnProperty('disabledMonths')) {
+            let disabled = options.monthSelectPlugin.disabledMonths;
+            if (disabled.hasOwnProperty(flatpickrInstance.currentYear) && disabled[flatpickrInstance.currentYear].length > 0) {
+                let monthElements = [...flatpickrInstance.rContainer.children[0].children];
+                disabled[flatpickrInstance.currentYear].forEach(month => {
+                    monthElements[month].classList.add('disabled');
+                    monthElements[month].disabled = true;
+                });
+            }
+        }
     }
 
     // returns array of html elements
@@ -52,21 +71,21 @@ class FlatpickrBundle
 
         before.addEventListener('click', (e) => {
             e.preventDefault();
-        })
+        });
         after.addEventListener('click', (e) => {
             e.preventDefault();
-        })
+        });
 
         before.setAttribute('data-parent', element.id);
         after.setAttribute('data-parent', element.id);
 
         before.addEventListener('click', (e) => {
             element.value = FlatpickrBundle.calculateNewDate(options, element.value, 'minus');
-        })
+        });
 
         after.addEventListener('click', (e) => {
             element.value = FlatpickrBundle.calculateNewDate(options, element.value, 'plus');
-        })
+        });
 
         element.parentNode.insertBefore(after, element.nextSibling);
         element.parentNode.insertBefore(before, element);

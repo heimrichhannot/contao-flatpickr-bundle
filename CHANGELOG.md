@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.0] - 2021-07-21
+- updated flatpickr depenency to 4.6.9
+- added monthSelectPlugin
+- added monthSelectPlugin style to theme encore-entry
+
 ## [2.4.4] - 2021-05-28
 - fixed missing twig-support-bundle dependency
 - fixed refactoring leftovers
