@@ -19,8 +19,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class FlatpickrUtil
 {
     const FLATPICKR_BTN_TEMPLATE_DEFAULT = "btn_datepicker";
-    protected TwigTemplateRenderer $twigTemplateRenderer;
 
+    /**
+     * @var TwigTemplateRenderer
+     */
+    protected $twigTemplateRenderer;
     /**
      * @var ModelUtil
      */

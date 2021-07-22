@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.1] - 2021-07-22
+- fixed property type in FlatpickrUtil
+
 ## [2.5.0] - 2021-07-21
 - updated flatpickr depenency to 4.6.9
 - added monthSelectPlugin
