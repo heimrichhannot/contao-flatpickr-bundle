@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.2] - 2021-07-29
+- fixed GetAttributesFromDcaListener to return attributes if second argument is not typeof DataContainer or null
+
 ## [2.5.1] - 2021-07-22
 - fixed property type in FlatpickrUtil
 

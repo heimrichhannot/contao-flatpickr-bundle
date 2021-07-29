@@ -35,6 +35,10 @@ class GetAttributesFromDcaListener
      */
     public function onGetAttributesFromDca(array $attributes, $dc = null): array
     {
+        if (!($dc instanceof DataContainer) && null !== $dc) {
+            return $attributes;
+        }
+
         return array_merge($attributes, $this->flatpickrUtil->getFlatpickrAttributes($attributes, $dc));
     }
 }
