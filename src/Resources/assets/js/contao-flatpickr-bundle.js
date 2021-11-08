@@ -96,6 +96,12 @@ class FlatpickrBundle
         let amount = options.incrementArrows.amount;
         let format = options.dateFormatIso8601;
 
+        if (options.time_24hr) {
+            let hours = format.slice(0,2);
+            let rest = format.slice(2,format.length);
+
+            format = hours.toUpperCase() + rest;
+        }
         let newDate = currentDate;
 
         switch (operation) {

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.5.4] - 2021-11-08
+- fixed momentjs initialization with dateFormatIso8601 and time_24h set
+
 ## [2.5.3] - 2021-08-05
 - fixed readme
 
