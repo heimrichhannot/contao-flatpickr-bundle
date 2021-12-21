@@ -10,7 +10,9 @@ $table = 'tl_page';
 $dca = &$GLOBALS['TL_DCA'][$table];
 
 $dca['palettes']['root'] = str_replace('includeLayout', 'includeLayout,useFlatpickrForDatepicker', $dca['palettes']['root']);
-$dca['palettes']['rootfallback'] = str_replace('includeLayout', 'includeLayout,useFlatpickrForDatepicker', $dca['palettes']['rootfallback']);
+if (isset($dca['palettes']['rootfallback'])) {
+    $dca['palettes']['rootfallback'] = str_replace('includeLayout', 'includeLayout,useFlatpickrForDatepicker', $dca['palettes']['rootfallback']);
+}
 $dca['palettes']['regular'] = str_replace('includeLayout', 'includeLayout,overrideUseFlatpickrForDatepicker', $dca['palettes']['regular']);
 
 $dca['fields']['useFlatpickrForDatepicker'] = [

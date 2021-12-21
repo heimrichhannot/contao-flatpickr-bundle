@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] - 2021-12-21
+- Fixed: try to manipulate tl_page rootfallback palette in contao 4.4
+
 ## [2.5.4] - 2021-11-08
 - fixed momentjs initialization with dateFormatIso8601 and time_24h set
 
