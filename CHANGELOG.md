@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - 2021-12-21
+## [2.5.5] - 2022-01-06
 - Fixed: try to manipulate tl_page rootfallback palette in contao 4.4
 
 ## [2.5.4] - 2021-11-08
