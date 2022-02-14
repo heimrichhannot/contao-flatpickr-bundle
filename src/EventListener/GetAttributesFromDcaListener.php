@@ -8,32 +8,26 @@
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\DataContainer;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
 
+/**
+ * @Hook("getAttributesFromDca")
+ */
 class GetAttributesFromDcaListener
 {
-    /**
-     * @var FlatpickrUtil
-     */
-    private $flatpickrUtil;
+    private FlatpickrUtil $flatpickrUtil;
 
-    /**
-     * GetAttributesFromDcaListener constructor.
-     *
-     * @param null $pageParents
-     */
     public function __construct(FlatpickrUtil $flatpickrUtil)
     {
         $this->flatpickrUtil = $flatpickrUtil;
     }
 
     /**
-     * @Hook("getAttributesFromDca")
-     *
      * @param DataContainer $dc
      */
-    public function onGetAttributesFromDca(array $attributes, $dc = null): array
+    public function __invoke(array $attributes, $dc = null): array
     {
         if (!($dc instanceof DataContainer) && null !== $dc) {
             return $attributes;

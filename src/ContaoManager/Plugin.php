@@ -50,6 +50,5 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
         }
 
 		$loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/services.yml');
-		$loader->load('@HeimrichHannotFlatpickrBundle/Resources/config/listeners.yml');
 	}
 }

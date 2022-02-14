@@ -5,7 +5,11 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 use HeimrichHannot\FilterBundle\Event\AdjustFilterOptionsEvent;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
+use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
+/**
+ * @ServiceTag("kernel.event_listener", event="huh.filter.event.adjust_filter_options_event", method: "__invoke")
+ */
 class AdjustFilterOptionsEventListener
 {
     /**

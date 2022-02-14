@@ -9,9 +9,13 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use HeimrichHannot\FilterBundle\Filter\Type\DateTimeType;
 use HeimrichHannot\FilterBundle\Filter\Type\DateType;
 
+/**
+ * @Hook("loadDataContainer")
+ */
 class LoadDataContainerListener
 {
 

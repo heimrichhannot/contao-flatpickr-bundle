@@ -9,7 +9,11 @@ namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
 use HeimrichHannot\TwigTemplatesBundle\Event\BeforeRenderTwigTemplateEvent;
+use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
+/**
+ * @ServiceTag("kernel.event_listener", event="huh.twig.beforeRenderTemplate", method: "__invoke")
+ */
 class BeforeRenderWidgetListener
 {
     /**
@@ -25,7 +29,7 @@ class BeforeRenderWidgetListener
         $this->flatpickrUtil   = $flatpickrUtil;
     }
 
-    public function onHuhTwigBeforeRenderTemplate(BeforeRenderTwigTemplateEvent $event)
+    public function __invoke(BeforeRenderTwigTemplateEvent $event)
     {
         $config = $event->getTemplateData()['arrConfiguration'];
         if ('text' !== $config['type']) {
