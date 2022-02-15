@@ -2,18 +2,28 @@
 
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
+use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\DataContainer;
 use Contao\Form;
+use Contao\FormFieldModel;
 use Contao\Widget;
-use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
+use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
+use HeimrichHannot\FlatpickrBundle\Option\FlatpickrOptions;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class FormGeneratorListener
 {
-    private FlatpickrUtil $flatpickrUtil;
+    private RequestStack     $requestStack;
+    private FrontendAsset    $frontendAsset;
+    private FlatpickrOptions $flatpickrOptions;
 
-    public function __construct(FlatpickrUtil $flatpickrUtil)
+    public function __construct(RequestStack $requestStack, FrontendAsset $frontendAsset, FlatpickrOptions $flatpickrOptions)
     {
-        $this->flatpickrUtil = $flatpickrUtil;
+        $this->requestStack = $requestStack;
+        $this->frontendAsset = $frontendAsset;
+        $this->flatpickrOptions = $flatpickrOptions;
     }
 
 
@@ -22,17 +32,37 @@ class FormGeneratorListener
      */
     public function onLoadFormField(Widget $widget, string $formId, array $formData, Form $form): Widget
     {
-        if ("text" !== $widget->type || !in_array($widget->rgxp, ['date', 'time', 'datim'])) {
+        if ("text" !== $widget->type || !$widget->addFlatpickrSupport || !in_array($widget->rgxp, ['date', 'time', 'datim'])) {
             return $widget;
         }
 
-        $attributes = $this->flatpickrUtil->getFlatpickrAttributes([
-            'flatpickr' => ['active' => true],
+        $attributes = $this->flatpickrOptions->getWidgetAttributes([
             'rgxp' => $widget->rgxp,
-            'type' => $widget->type,
         ]);
+
         $widget->addAttributes($attributes);
 
+        $this->frontendAsset->addFrontendAssets();
+
         return $widget;
+    }
+
+    /**
+     * @Callback(table="tl_form_field", target="config.onload")
+     */
+    public function onLoadCallback(DataContainer $dc = null): void
+    {
+        if (null === $dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
+            return;
+        }
+
+        $fieldModel = FormFieldModel::findById($dc->id);
+        if (!$fieldModel || 'text' !== $fieldModel->type || !in_array($fieldModel->rgxp, ['date', 'time', 'datim'])) {
+            return;
+        }
+
+        PaletteManipulator::create()
+            ->addField('addFlatpickrSupport', 'fconfig_legend', PaletteManipulator::POSITION_APPEND)
+            ->applyToPalette('text', 'tl_form_field');
     }
 }
