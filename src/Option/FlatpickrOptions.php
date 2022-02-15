@@ -3,10 +3,9 @@
 namespace HeimrichHannot\FlatpickrBundle\Option;
 
 use Contao\DataContainer;
-use Contao\System;
 use HeimrichHannot\FlatpickrBundle\Event\CustomizeFlatpickrOptionsEvent;
 use HeimrichHannot\UtilsBundle\Date\DateUtil;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class FlatpickrOptions
 {
@@ -15,12 +14,12 @@ class FlatpickrOptions
     const PICKER_TYPE_DATETIME = 'datim';
 
     private DateUtil        $dateUtil;
-    private EventDispatcher $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param array|bool[] $options
      */
-    public function __construct(DateUtil $dateUtil, EventDispatcher $eventDispatcher)
+    public function __construct(DateUtil $dateUtil, EventDispatcherInterface $eventDispatcher)
     {
         $this->dateUtil = $dateUtil;
         $this->eventDispatcher = $eventDispatcher;
@@ -40,7 +39,7 @@ class FlatpickrOptions
 
     public function getWidgetAttributes(array $attributes, DataContainer $dc = null): array
     {
-        $options = $this->getFlatpickrOptions();
+        $options = $this->getFlatpickrOptions($attributes['rgxp']);
         $options = array_merge($options, $attributes['flatpickr']['options'] ?? []);
 
         $event = $this->eventDispatcher->dispatch(

@@ -9,8 +9,9 @@ use Contao\System;
  * Copyright (c) 2020 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
+ *
+ * @deprecated Use FlatpickrOptions instead
  */
-
 class FlatpickrManager
 {
     public function getOptionsAsArray(array $customOptions = [], string $table = '', string $field = ''): array
