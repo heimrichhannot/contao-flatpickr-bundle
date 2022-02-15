@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.6.0] - 2022-02-15
+- Added: formgenerator support ([#6])
+- Added: FlatpickrOptions class to have a single option generation class ([#6])
+- Changed: raised minimum php version to 7.4 ([#6])
+- Changed: raised minimum contao version to 4.9 ([#6])
+- Changed: some refactoring due contao 4.9 update ([#6])
+- Deprecated: FlatpickrManager ([#6])
+- Deprecated: some FlatpickrUtil methods ([#6])
+
 ## [2.5.5] - 2022-01-06
 - Fixed: try to manipulate tl_page rootfallback palette in contao 4.4
 
@@ -98,3 +107,5 @@ Now works without encore bundle!
 
 * removed `console.log()` debug messages
 * added bind to `formhybrid_ajax_complete` event listener
+
+[#6]: https://github.com/heimrichhannot/contao-flatpickr-bundle/pull/6
