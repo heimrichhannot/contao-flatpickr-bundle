@@ -4,18 +4,35 @@ A bundle to provide frontend date- and timepicker using [flatpickr.js](https://f
 ## Features
 * show date- or timepicker in frontend forms
 * dynamic language file loading using webpack dynamic import
-* supports [Contao Bootstrap Templates Bundle](https://github.com/heimrichhannot/contao-bootstrap-templates-bundle)
+* integrations:
+  * Contao form generator
+  * [Filter Bundle](https://github.com/heimrichhannot/contao-filter-bundle)
 * supports [Contao Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle)
-
-## Setup
-
-Install: `composer require heimrichhannot/contao-flatpickr-bundle`
+* supports [Twig Templates Bundle](https://github.com/heimrichhannot/contao-twig-templates-bundle)
 
 ## Usage
 
-Active or deactivate flatpickr support on page level (Layout section). You can overwrite settings from a parent page.
+### Install
 
-### DCA configuration
+Install with composer or contao manager and update the database afterwards
+
+```
+composer require heimrichhannot/contao-flatpickr-bundle
+```
+
+### Form generator
+
+Create a text field with input validation date, time or date and time and check 'Activate flatpickr'
+
+### Filter bundle 
+
+Create a filter element of type date, datetime, time or text and check 'Activate flatpickr'. You can also activate flatpickr and pass additional options from dca. See chapter dca configuration for more information. Flatpickr bundle checks the corresponding field dca configuration for filter elements.
+
+### Other frontend forms
+
+Other frontend form systems may work (like [formhybrid](https://github.com/heimrichhannot/contao-formhybrid)), if the form widgets are processed by the getAttributesFromDca hook. You need to activate flatpickr in your dca field configuration (see dca configuration chapter) and activate flatpickr on page level (layout section). The configuration is inherited but can be overridden.
+
+## DCA configuration
 
 To add flatpickr to an input, set datepicker for your fields in dca to true. You can switch between datepicker, timepicker and datetimepicker by setting the corresponding format in the 'rgxp' setting.
 
