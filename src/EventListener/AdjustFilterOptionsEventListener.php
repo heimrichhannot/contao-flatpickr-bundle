@@ -4,49 +4,59 @@
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
 use HeimrichHannot\FilterBundle\Event\AdjustFilterOptionsEvent;
+use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
+use HeimrichHannot\FlatpickrBundle\Option\FlatpickrOptions;
 use HeimrichHannot\FlatpickrBundle\Util\FlatpickrUtil;
+use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 class AdjustFilterOptionsEventListener
 {
-    /**
-     * @var FlatpickrUtil
-     */
-    private $flatpickrUtil;
+    private FlatpickrUtil    $flatpickrUtil;
+    private FlatpickrOptions $flatpickrOptions;
+    private FrontendAsset    $frontendAsset;
 
-    public function __construct(FlatpickrUtil $flatpickrUtil)
+    public function __construct(FlatpickrUtil $flatpickrUtil, FlatpickrOptions $flatpickrOptions, FrontendAsset $frontendAsset)
     {
         $this->flatpickrUtil = $flatpickrUtil;
+        $this->flatpickrOptions = $flatpickrOptions;
+        $this->frontendAsset = $frontendAsset;
     }
 
-    public function __invoke(AdjustFilterOptionsEvent $event)
+    /**
+     * @ServiceTag("kernel.event_listener", event="huh.filter.event.adjust_filter_options_event")
+     */
+    public function __invoke(AdjustFilterOptionsEvent $event): void
     {
-
-        if (empty($attributes = $this->getFlatpickrAttributes($event)) && !(bool)$event->getElement()->addFlatpickrSupport) {
+        if (empty($attributes = $this->getFlatpickrAttributes($event)) && !$event->getElement()->addFlatpickrSupport) {
             return;
         }
 
         $options = $event->getOptions();
         $element = $event->getElement();
 
-        if (empty($options['attr']['flatpickr']) && (bool)$element->addFlatpickrSupport ) {
-            $options['attr']['flatpickr']['active'] = true;
-            $options['attr']['flatpickr']['options'] = ['dateFormat' => 'd.m.Y'];
+        switch ($element->type) {
+            case 'date_time':
+                $options['attr']['rgxp'] = FlatpickrOptions::PICKER_TYPE_DATETIME;
+                break;
+            case 'time':
+                $options['attr']['rgxp'] = FlatpickrOptions::PICKER_TYPE_TIME;
+                break;
+            case 'date':
+            default:
+                $options['attr']['rgxp'] = FlatpickrOptions::PICKER_TYPE_DATE;
+        }
 
-            if($element->type === 'date_time' || $element->type === 'time') {
-                $options['attr']['flatpickr']['options']['enableTime'] = true;
-            }
-
-            if($element->type === 'time') {
-                $options['attr']['flatpickr']['options']['noCalendar'] = true;
-            }
-
+        if (empty($options['attr']['flatpickr'])) {
             $options['attr']['class'] ? $options['attr']['class'] = $options['attr']['class'].' flatpickr-input' : $options['attr']['class'] = 'flatpickr-input';
             $options['attr']['type'] = 'text';
         }
 
-        $options['attr'] = array_merge($options['attr'], $this->flatpickrUtil->getFlatpickrAttributes($options['attr']));
+        $options['attr'] = array_merge($options['attr'], $this->flatpickrOptions->getWidgetAttributes($options['attr']));
+
         $inputPosition   = $attributes['flatpickr']['options']['prependPicker'] ? 'input_group_prepend' : 'input_group_append';
         $this->flatpickrUtil->compilePicker($attributes, $options, $inputPosition);
+
+        $this->frontendAsset->addFrontendAssets();
 
         unset($options['attr']['flatpickr']);
         $event->setOptions($options);

@@ -16,6 +16,9 @@ use HeimrichHannot\UtilsBundle\Dca\DcaUtil;
 use HeimrichHannot\UtilsBundle\Model\ModelUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ *
+ */
 class FlatpickrUtil
 {
     const FLATPICKR_BTN_TEMPLATE_DEFAULT = "btn_datepicker";
@@ -73,6 +76,9 @@ class FlatpickrUtil
      * @param array $attributes
      * @param DataContainer|null $dc
      * @return array
+     *
+     * @deprecated Use FlatpickrOptions instead
+     *
      */
     public function getFlatpickrAttributes(array $attributes, $dc = null): array
     {
@@ -142,6 +148,8 @@ class FlatpickrUtil
 
     /**
      * @param array $attributes
+     *
+     * @deprecated Use FrontendAsset instead.
      */
     protected function addFrontendAssets(array $attributes): void
     {
