@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.6.1] - 2022-02-23
+- Fixed: date- and time format not correctly determined
+
 ## [2.6.0] - 2022-02-15
 - Added: formgenerator support ([#6])
 - Added: FlatpickrOptions class to have a single option generation class ([#6])

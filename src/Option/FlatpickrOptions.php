@@ -3,6 +3,7 @@
 namespace HeimrichHannot\FlatpickrBundle\Option;
 
 use Contao\DataContainer;
+use Contao\Date;
 use HeimrichHannot\FlatpickrBundle\Event\CustomizeFlatpickrOptionsEvent;
 use HeimrichHannot\UtilsBundle\Date\DateUtil;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -60,17 +61,17 @@ class FlatpickrOptions
 
         switch ($pickerType) {
             case self::PICKER_TYPE_TIME:
-                $dateFormat = $GLOBALS['TL_CONFIG']['timeFormat'];
+                $dateFormat = Date::getNumericTimeFormat();
                 $options['enableTime'] = true;
                 $options['noCalendar'] = true;
                 break;
             case self::PICKER_TYPE_DATETIME:
-                $dateFormat = $GLOBALS['TL_CONFIG']['datimFormat'];
+                $dateFormat = Date::getNumericDatimFormat();
                 $options['enableTime'] = true;
                 break;
             case self::PICKER_TYPE_DATE:
             default:
-                $dateFormat = $GLOBALS['TL_CONFIG']['dateFormat'];
+                $dateFormat = Date::getNumericDateFormat();
         }
 
         $options['dateFormat'] = $dateFormat;
