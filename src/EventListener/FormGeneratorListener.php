@@ -37,9 +37,16 @@ class FormGeneratorListener
             return $widget;
         }
 
-        $attributes = $this->flatpickrOptions->getWidgetAttributes([
-            'rgxp' => $widget->rgxp,
-        ]);
+        $attributes = ['rgxp' => $widget->rgxp,];
+
+        if ($widget->isFlatpickrDateRangeStartElement
+            && $widget->flatpickrDateRangeStopElement
+            && ($secondElement = FormFieldModel::findByPk((int)$widget->flatpickrDateRangeStopElement)))
+        {
+            $attributes['flatpickr']['plugins']['rangePlugin'] = ['input' => '#ctrl_'.$secondElement->id];
+        }
+
+        $attributes = $this->flatpickrOptions->getWidgetAttributes($attributes);
 
         $widget->addAttributes($attributes);
 

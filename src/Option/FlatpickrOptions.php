@@ -33,15 +33,18 @@ class FlatpickrOptions
             'wrap' => true,
             'time_24hr' => true,
             'allowInput' => true,
-            'dateFormat' => $GLOBALS['TL_CONFIG']['dateFormat'],
-            'dateFormatIso8601' => $this->dateUtil->transformPhpDateFormatToISO8601($GLOBALS['TL_CONFIG']['dateFormat'])
+            'dateFormat' => Date::getNumericDateFormat(),
+            'dateFormatIso8601' => $this->dateUtil->transformPhpDateFormatToISO8601(Date::getNumericDateFormat())
         ];
     }
 
-    public function getWidgetAttributes(array $attributes, DataContainer $dc = null): array
+    public function getWidgetAttributes(array $attributes, DataContainer $dc = null, array $options = []): array
     {
-        $options = $this->getFlatpickrOptions($attributes['rgxp']);
-        $options = array_merge($options, $attributes['flatpickr']['options'] ?? []);
+        $pickerType    = $attributes['rgxp'];
+        $configuration = [];
+
+        $options = $this->getFlatpickrOptions($pickerType, $configuration);
+        $options = array_merge($options, ($attributes['flatpickr']['options'] ?? []), $attributes['flatpickr']['plugins'] ?? []);
 
         $event = $this->eventDispatcher->dispatch(
             new CustomizeFlatpickrOptionsEvent($options, $attributes, $dc),
@@ -55,7 +58,11 @@ class FlatpickrOptions
         ];
     }
 
-    public function getFlatpickrOptions(string $pickerType = self::PICKER_TYPE_DATE): array
+    /**
+     * @param string $pickerType The Picker type, see class PICKER_TYPE_* constants.
+     * @return array
+     */
+    public function getFlatpickrOptions(string $pickerType = self::PICKER_TYPE_DATE,): array
     {
         $options = $this->getDefaultOptions();
 
