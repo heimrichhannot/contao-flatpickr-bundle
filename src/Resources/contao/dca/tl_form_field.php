@@ -1,10 +1,26 @@
 <?php
 $dca = &$GLOBALS['TL_DCA']['tl_form_field'];
 
-$dca['fields']['addFlatpickrSupport'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_filter_config_element']['addFlatpickrSupport'],
-    'exclude' => true,
-    'inputType' => 'checkbox',
-    'eval' => ['tl_class' => 'w50'],
-    'sql' => "char(1) NOT NULL default ''",
-];
+$dca['palettes']['__selector__'][] = 'addFlatpickrSupport';
+$dca['palettes']['__selector__'][] = 'isFlatpickrDateRangeStartElement';
+
+$dca['subpalettes']['addFlatpickrSupport'] = 'isFlatpickrDateRangeStartElement';
+$dca['subpalettes']['isFlatpickrDateRangeStartElement'] = 'flatpickrDateRangeStopElement';
+
+$dca['fields'] = array_merge($dca['fields'], [
+    'addFlatpickrSupport' => [
+        'inputType' => 'checkbox',
+        'eval' => ['tl_class' => 'w50', 'submitOnChange' => true],
+        'sql' => "char(1) NOT NULL default ''",
+    ],
+    'isFlatpickrDateRangeStartElement' => [
+        'inputType' => 'checkbox',
+        'eval' => ['tl_class' => 'w50', 'submitOnChange' => true],
+        'sql' => "char(1) NOT NULL default ''",
+    ],
+    'flatpickrDateRangeStopElement' => [
+        'inputType'  => 'select',
+        'eval'       => ['tl_class' => 'w50', 'chosen' => true, 'includeBlankOption' => true],
+        'sql'        => "int(10) unsigned NOT NULL default 0",
+    ],
+]);
