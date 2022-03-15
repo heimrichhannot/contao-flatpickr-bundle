@@ -38,12 +38,9 @@ class FlatpickrOptions
         ];
     }
 
-    public function getWidgetAttributes(array $attributes, DataContainer $dc = null, array $options = []): array
+    public function getWidgetAttributes(array $attributes, DataContainer $dc = null): array
     {
-        $pickerType    = $attributes['rgxp'];
-        $configuration = [];
-
-        $options = $this->getFlatpickrOptions($pickerType, $configuration);
+        $options = $this->getFlatpickrOptions($attributes['rgxp']);
         $options = array_merge($options, ($attributes['flatpickr']['options'] ?? []), $attributes['flatpickr']['plugins'] ?? []);
 
         $event = $this->eventDispatcher->dispatch(
@@ -62,7 +59,7 @@ class FlatpickrOptions
      * @param string $pickerType The Picker type, see class PICKER_TYPE_* constants.
      * @return array
      */
-    public function getFlatpickrOptions(string $pickerType = self::PICKER_TYPE_DATE,): array
+    public function getFlatpickrOptions(string $pickerType = self::PICKER_TYPE_DATE): array
     {
         $options = $this->getDefaultOptions();
 
