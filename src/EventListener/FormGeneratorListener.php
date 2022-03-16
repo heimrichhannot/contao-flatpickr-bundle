@@ -2,6 +2,7 @@
 
 namespace HeimrichHannot\FlatpickrBundle\EventListener;
 
+use Contao\Controller;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
@@ -36,9 +37,23 @@ class FormGeneratorListener
             return $widget;
         }
 
-        $attributes = $this->flatpickrOptions->getWidgetAttributes([
-            'rgxp' => $widget->rgxp,
-        ]);
+        if (FormFieldModel::findBy(
+            ['pid=?','isFlatpickrDateRangeStartElement=\'1\'', 'flatpickrDateRangeStopElement=?' ],
+            [$widget->pid, $widget->id]
+        )) {
+            return $widget;
+        }
+
+        $attributes = ['rgxp' => $widget->rgxp,];
+
+        if ($widget->isFlatpickrDateRangeStartElement
+            && $widget->flatpickrDateRangeStopElement
+            && ($secondElement = FormFieldModel::findByPk((int)$widget->flatpickrDateRangeStopElement)))
+        {
+            $attributes['flatpickr']['plugins']['rangePlugin'] = ['input' => '#ctrl_'.$secondElement->id];
+        }
+
+        $attributes = $this->flatpickrOptions->getWidgetAttributes($attributes);
 
         $widget->addAttributes($attributes);
 
@@ -64,5 +79,39 @@ class FormGeneratorListener
         PaletteManipulator::create()
             ->addField('addFlatpickrSupport', 'fconfig_legend', PaletteManipulator::POSITION_APPEND)
             ->applyToPalette('text', 'tl_form_field');
+    }
+
+    /**
+     * @Callback(table="tl_form_field", target="fields.flatpickrDateRangeStopElement.options")
+     */
+    public function  onFlatpickrDateRangeStopElementOptionsCallback(DataContainer $dc = null): array
+    {
+        if (null === $dc || !$dc->id) {
+            return [];
+        }
+
+        $currentField = FormFieldModel::findByPk($dc->id);
+
+        if (!$currentField) {
+            return [];
+        }
+
+        $fields = FormFieldModel::findPublishedByPid((int)$currentField->pid);
+        if (!$fields) {
+            return [];
+        }
+
+        Controller::loadLanguageFile('default');
+
+        $options = [];
+
+        while ($field = $fields->next()) {
+            if ('text' !== $field->type || !in_array($field->rgxp, ['date', 'time', 'datim'])) {
+                continue;
+            }
+            $options[$field->id] = ($field->label ?? $field->name ?? $field->type). ' ('.($GLOBALS['TL_LANG']['FFL'][$field->type][0] ?? $field->type).')';
+        }
+
+        return $options;
     }
 }

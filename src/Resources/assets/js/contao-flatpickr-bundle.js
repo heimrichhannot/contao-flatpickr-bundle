@@ -1,36 +1,69 @@
 import flatpickr from 'flatpickr';
 import moment from 'moment';
 import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index';
+import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
+
 
 class FlatpickrBundle
 {
     static init()
     {
         let flatpickrFields = document.querySelectorAll('input[data-flatpickr]');
-        flatpickrFields.forEach((element, key, parent) => {
-            let flatpickrOptions = JSON.parse(element.dataset.flatpickr);
-            let lang = document.querySelector('html').getAttribute('lang');
-            if (flatpickrOptions.hasOwnProperty('monthSelectPlugin') && flatpickrOptions.monthSelectPlugin) {
-                let selectMonthPluginOptions = JSON.parse(element.dataset.flatpickr).monthSelectPlugin;
-                flatpickrOptions.plugins = [
-                    new monthSelectPlugin(selectMonthPluginOptions)
-                ];
-            }
+        if (flatpickrFields.length < 1) {
+            return;
+        }
 
-            import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + lang + '.js').then((locale) =>
-                {
-                    flatpickr.localize(locale.default[lang]);
-                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
+        let lang = document.querySelector('html').getAttribute('lang');
 
-                }).catch(() => {
-                    FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
-                });
+        let initialize = () => {
+            flatpickrFields.forEach((element, key, parent) => {
+                let flatpickrOptions = JSON.parse(element.dataset.flatpickr);
+                if (!flatpickrOptions.hasOwnProperty('plugins')) {
+                    flatpickrOptions.plugins = [];
+                }
+
+                if ('monthSelectPlugin' in flatpickrOptions) {
+                    flatpickrOptions.plugins.push(new monthSelectPlugin(flatpickrOptions.monthSelectPlugin));
+                }
+                FlatpickrBundle.createFlatpickrInstance(element, flatpickrOptions);
+            });
+        };
+
+        import(/* webpackChunkName: "flatpickr-[request]" */ 'flatpickr/dist/l10n/' + lang + '.js').then((locale) =>
+        {
+            flatpickr.localize(locale.default[lang]);
+            initialize();
+
+        }).catch(() => {
+            initialize();
         });
     }
 
     static createFlatpickrInstance(element, options)
     {
-        let parent = element.parentElement;
+        let wrap = false;
+        if ('wrap' in options && true === options.wrap) {
+            wrap = true;
+        }
+
+        let parent = element;
+        if (true === wrap) {
+            parent = element.parentElement;
+        }
+
+        if ('rangePlugin' in options && 'input' in options.rangePlugin) {
+            let secondInput = document.querySelector(options.rangePlugin.input);
+            if (true === wrap) {
+                secondInput.dataset.input = '1';
+                options.rangePlugin.input = secondInput.parentElement;
+            }
+
+            if (null !== secondInput) {
+                options.plugins.push(new rangePlugin(options.rangePlugin));
+                delete options.rangePlugin;
+            }
+        }
+
 
         if ( typeof options.incrementArrows !== 'undefined') {
             FlatpickrBundle.createFlatpickrIncrementButtons(options, element);
