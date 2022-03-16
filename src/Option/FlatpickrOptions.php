@@ -59,7 +59,8 @@ class FlatpickrOptions
         return [
             'data-input' => '1',
             'prefix' => 'flatpickr',
-            'data-flatpickr' => json_encode($event->getFlatpickrOptions())
+            'data-flatpickr' => json_encode($event->getFlatpickrOptions()),
+            'autocomplete' => 'off',
         ];
     }
 

@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.1] - 2022-03-16
+- Fixed: browser autocomplete shown on flatpickr fields
+
 ## [2.7.0] - 2022-03-16
 - Added: rangePlugin (two input date range) support ([#7])
 - Changed: refactored js code to reduce duplicate executions ([#7])

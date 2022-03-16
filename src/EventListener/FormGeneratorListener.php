@@ -41,6 +41,7 @@ class FormGeneratorListener
             ['pid=?','isFlatpickrDateRangeStartElement=\'1\'', 'flatpickrDateRangeStopElement=?' ],
             [$widget->pid, $widget->id]
         )) {
+            $widget->addAttribute('autocomplete', 'off');
             return $widget;
         }
 
