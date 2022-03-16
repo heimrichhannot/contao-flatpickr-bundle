@@ -37,6 +37,13 @@ class FormGeneratorListener
             return $widget;
         }
 
+        if (FormFieldModel::findBy(
+            ['pid=?','isFlatpickrDateRangeStartElement=\'1\'', 'flatpickrDateRangeStopElement=?' ],
+            [$widget->pid, $widget->id]
+        )) {
+            return $widget;
+        }
+
         $attributes = ['rgxp' => $widget->rgxp,];
 
         if ($widget->isFlatpickrDateRangeStartElement
