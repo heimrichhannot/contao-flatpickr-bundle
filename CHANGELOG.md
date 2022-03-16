@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.7.0] - 2022-03-16
+- Added: rangePlugin (two input date range) support ([#7])
+- Changed: refactored js code to reduce duplicate executions ([#7])
+- Changed: allow php 8 ([#7])
+- Deprecated: enableAmPm support ([#7])
+- Fixed: enableAmPm support ([#7])
+
 ## [2.6.1] - 2022-02-23
 - Fixed: date- and time format not correctly determined
 
@@ -111,4 +118,5 @@ Now works without encore bundle!
 * removed `console.log()` debug messages
 * added bind to `formhybrid_ajax_complete` event listener
 
+[#7]: https://github.com/heimrichhannot/contao-flatpickr-bundle/pull/7
 [#6]: https://github.com/heimrichhannot/contao-flatpickr-bundle/pull/6
