@@ -41,6 +41,14 @@ class FlatpickrOptions
     public function getWidgetAttributes(array $attributes, DataContainer $dc = null): array
     {
         $options = $this->getFlatpickrOptions($attributes['rgxp']);
+
+        if (isset($attributes['flatpickr']['options']['enableAmPm'])) {
+            trigger_deprecation('heimrichhannot/contao-flatpickr-bundle', '2.7', '\'enableAmPm\' option is deprecated and will not be supported in future versions. Please use time_24hr option instead.');
+            if (true === $attributes['flatpickr']['options']['enableAmPm']) {
+                $options['time_24hr'] = false;
+            }
+        }
+
         $options = array_merge($options, ($attributes['flatpickr']['options'] ?? []), $attributes['flatpickr']['plugins'] ?? []);
 
         $event = $this->eventDispatcher->dispatch(
