@@ -11,6 +11,7 @@ use Contao\Form;
 use Contao\FormFieldModel;
 use Contao\Widget;
 use HeimrichHannot\FlatpickrBundle\Asset\FrontendAsset;
+use HeimrichHannot\FlatpickrBundle\DataContainer\FlatpickrDataContainer;
 use HeimrichHannot\FlatpickrBundle\Option\FlatpickrOptions;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -54,7 +55,11 @@ class FormGeneratorListener
             $attributes['flatpickr']['plugins']['rangePlugin'] = ['input' => '#ctrl_'.$secondElement->id];
         }
 
-        $attributes = $this->flatpickrOptions->getWidgetAttributes($attributes);
+        $dc = new FlatpickrDataContainer(FormFieldModel::getTable(), (int)$widget->id);
+        $dc->form = $form;
+        $dc->widget = $widget;
+
+        $attributes = $this->flatpickrOptions->getWidgetAttributes($attributes, $dc);
 
         $widget->addAttributes($attributes);
 

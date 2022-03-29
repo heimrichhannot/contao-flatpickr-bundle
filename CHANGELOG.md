@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.0] - 2022-03-29
+- Added: datacontainer object now also passed to CustomizeFlatpickrOptionsEvent for form generator widget (added a custom FlatpickrDataContainer class)
+- Added: CustomizeFlatpickrOptionsEvent::setFlatpickrOption()
+
 ## [2.7.1] - 2022-03-16
 - Fixed: browser autocomplete shown on flatpickr fields
 

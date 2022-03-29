@@ -41,6 +41,11 @@ class CustomizeFlatpickrOptionsEvent extends Event
         $this->dc = $dc;
     }
 
+    public function setFlatpickrOption(string $option, string $value): void
+    {
+        $this->flatpickrOptions[$option] = $value;
+    }
+
     public function getFlatpickrOptions(): array
     {
         return $this->flatpickrOptions;
