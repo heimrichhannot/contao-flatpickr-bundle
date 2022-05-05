@@ -8,7 +8,7 @@
 namespace HeimrichHannot\FlatpickrBundle\Event;
 
 use Contao\DataContainer;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomizeFlatpickrOptionsEvent extends Event
 {

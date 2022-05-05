@@ -91,12 +91,13 @@ class FlatpickrUtil
         $options         = $attributes['flatpickr']['options'];
         $options['rgxp'] = $attributes['rgxp'];
 
-        $event = $this->eventDispatcher->dispatch(CustomizeFlatpickrOptionsEvent::NAME,
+        $event = $this->eventDispatcher->dispatch(
             new CustomizeFlatpickrOptionsEvent(
                 $this->flatpickrManager->getOptionsAsArray($options),
                 $attributes,
                 $dc
-            ));
+            ),
+            CustomizeFlatpickrOptionsEvent::NAME);
 
         return [
             'data-input' => '1',

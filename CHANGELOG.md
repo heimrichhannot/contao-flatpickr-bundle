@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.1] - 2022-05-05
+- Fixed: symfony 5 support
+
 ## [2.8.0] - 2022-03-29
 - Added: datacontainer object now also passed to CustomizeFlatpickrOptionsEvent for form generator widget (added a custom FlatpickrDataContainer class)
 - Added: CustomizeFlatpickrOptionsEvent::setFlatpickrOption()
