@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.8.2] - 2023-03-20
+- Fixed: warning with php 8
+
 ## [2.8.1] - 2022-05-05
 - Fixed: symfony 5 support
 

@@ -73,14 +73,14 @@ class AdjustFilterOptionsEventListener
     {
         $dcaField = $this->getDcaFieldForElement($event);
 
-        if (!$dcaField || !$dcaField['eval']['flatpickr']) {
+        if (!$dcaField || !($dcaField['eval']['flatpickr'] ?? null)) {
             return [];
         }
 
         return [
             'type' => $dcaField['inputType'],
             'flatpickr' => $dcaField['eval']['flatpickr'],
-            'rgxp' => $dcaField['rgxp']
+            'rgxp' => ($dcaField['rgxp'] ?? '')
         ];
     }
 
@@ -101,6 +101,6 @@ class AdjustFilterOptionsEventListener
             return [];
         }
 
-        return $GLOBALS['TL_DCA'][$filter['dataContainer']]['fields'][$field];
+        return $GLOBALS['TL_DCA'][$filter['dataContainer']]['fields'][$field] ?? null;
     }
 }
