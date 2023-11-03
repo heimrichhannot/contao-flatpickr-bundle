@@ -1,61 +1,44 @@
 <?php
 
 /*
- * Copyright (c) 2020 Heimrich & Hannot GmbH
+ * Copyright (c) 2023 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
 
 namespace HeimrichHannot\FlatpickrBundle\Asset;
 
-use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
-use HeimrichHannot\EncoreBundle\Asset\FrontendAsset as EncoreFrontendAsset;
+use HeimrichHannot\EncoreContracts\PageAssetsTrait;
+use HeimrichHannot\UtilsBundle\Util\Utils;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
-class FrontendAsset
+class FrontendAsset implements ServiceSubscriberInterface
 {
-    /**
-     * @var EncoreFrontendAsset
-     */
-    protected $encoreFrontendAsset;
+    use PageAssetsTrait;
 
-    /**
-     * @var ContainerUtil
-     */
-    protected $containerUtil;
+    private Utils $utils;
 
     /**
      * FrontendAsset constructor.
      */
-    public function __construct(ContainerUtil $containerUtil)
+    public function __construct(Utils $utils)
     {
-        $this->containerUtil = $containerUtil;
-    }
-
-    public function setEncoreFrontendAsset(EncoreFrontendAsset $encoreFrontendAsset): void
-    {
-        $this->encoreFrontendAsset = $encoreFrontendAsset;
+        $this->utils = $utils;
     }
 
     public function addFrontendAssets()
     {
-        if (!$this->containerUtil->isFrontend()) {
-            return;
+        if ($this->utils->container()->isFrontend()) {
+           $this->addPageEntrypoint('contao-flatpickr-bundle', [
+               'TL_CSS' => [
+                   'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css',
+               ],
+               'TL_JAVASCRIPT' => [
+                   'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js',
+                   'contao-flatpickr-bundle-theme' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js',
+               ],
+           ]);
         }
-
-        if ($this->encoreFrontendAsset) {
-
-            if(!$this->encoreFrontendAsset->isActiveEntrypoint('contao-flatpickr-bundle')) {
-                $this->encoreFrontendAsset->addActiveEntrypoint('contao-flatpickr-bundle');
-            }
-
-            if(!$this->encoreFrontendAsset->isActiveEntrypoint('contao-flatpickr-bundle-theme')) {
-                $this->encoreFrontendAsset->addActiveEntrypoint('contao-flatpickr-bundle-theme');
-            }
-
-        }
-
-        $GLOBALS['TL_CSS']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css';
-        $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js';
-        $GLOBALS['TL_JAVASCRIPT']['contao-flatpickr-bundle-theme'] = 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js';
     }
+
 }

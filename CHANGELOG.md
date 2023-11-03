@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.1] - 2023-11-03
+- Refactored: FrontendAsset
+- Removed: encore config
+- Updated: utils version
+- Added: encore contracts dependency
+
 ## [2.9.0] - 2023-11-03
 - Added: encore contracts support
 

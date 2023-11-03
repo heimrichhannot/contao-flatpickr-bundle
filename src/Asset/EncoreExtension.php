@@ -17,11 +17,11 @@ class EncoreExtension implements EncoreExtensionInterface
     public function getEntries(): array
     {
         return [
-            EncoreEntry::create('contao-flatpickr-bundle-init', 'src/Resources/assets/js/contao-flatpickr-bundle-init.js')
-                ->addJqueryEntryToRemoveFromGlobals('contao-flatpickr-bundle-init'),
+            EncoreEntry::create('contao-flatpickr-bundle', 'src/Resources/assets/js/contao-flatpickr-bundle-init.js')
+                ->addJsEntryToRemoveFromGlobals('contao-flatpickr-bundle'),
             EncoreEntry::create('contao-flatpickr-bundle-theme', 'src/Resources/assets/js/contao-flatpickr-bundle-theme.js')
                 ->setRequiresCss(true)
-                ->addJqueryEntryToRemoveFromGlobals('contao-flatpickr-bundle-theme')
+                ->addJsEntryToRemoveFromGlobals('contao-flatpickr-bundle-theme')
         ];
     }
 }
