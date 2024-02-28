@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.2] - 2024-02-28
+- Fixed: flatpickr theme not added automatically after 2.9.1 for encore context
+
 ## [2.9.1] - 2023-11-03
 - Refactored: FrontendAsset
 - Removed: encore config

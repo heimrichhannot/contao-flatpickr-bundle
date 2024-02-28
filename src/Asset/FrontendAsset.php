@@ -29,15 +29,19 @@ class FrontendAsset implements ServiceSubscriberInterface
     public function addFrontendAssets()
     {
         if ($this->utils->container()->isFrontend()) {
-           $this->addPageEntrypoint('contao-flatpickr-bundle', [
-               'TL_CSS' => [
-                   'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css',
-               ],
-               'TL_JAVASCRIPT' => [
-                   'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js',
-                   'contao-flatpickr-bundle-theme' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js',
-               ],
-           ]);
+            $this->addPageEntrypoint('contao-flatpickr-bundle', [
+                'TL_JAVASCRIPT' => [
+                    'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle.js',
+                ],
+            ]);
+            $this->addPageEntrypoint('contao-flatpickr-bundle-theme', [
+                'TL_CSS' => [
+                    'contao-flatpickr-bundle' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.css',
+                ],
+                'TL_JAVASCRIPT' => [
+                    'contao-flatpickr-bundle-theme' => 'bundles/heimrichhannotflatpickr/assets/contao-flatpickr-bundle-theme.js',
+                ],
+            ]);
         }
     }
 
