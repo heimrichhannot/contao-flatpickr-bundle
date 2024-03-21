@@ -113,7 +113,7 @@ class FlatpickrUtil
      */
     public function getFlatpickrBtnTemplate(array $config)
     {
-        $templateName = $config['flatpickr']['options']['customBtnTpl'] ?: self::FLATPICKR_BTN_TEMPLATE_DEFAULT;
+        $templateName = $config['flatpickr']['options']['customBtnTpl'] ?? self::FLATPICKR_BTN_TEMPLATE_DEFAULT;
 
         return $this->templateLocator->getTemplatePath($templateName);
     }

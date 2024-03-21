@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.3] - 2024-03-21
+- Fixed: warnings with php 8
+
 ## [2.9.2] - 2024-02-28
 - Fixed: flatpickr theme not added automatically after 2.9.1 for encore context
 
