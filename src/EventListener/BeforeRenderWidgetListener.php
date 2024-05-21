@@ -24,7 +24,7 @@ class BeforeRenderWidgetListener
      */
     public function __construct(FlatpickrUtil $flatpickrUtil)
     {
-        $this->flatpickrUtil   = $flatpickrUtil;
+        $this->flatpickrUtil = $flatpickrUtil;
     }
 
     /**
@@ -43,9 +43,11 @@ class BeforeRenderWidgetListener
         $templateData = $event->getTemplateData();
 
         if ($config['flatpickr']['active'] === true) {
-            $inputPosition = $templateData['arrConfiguration']['flatpickr']['options']['prependPicker'] ? 'inputPrepend' : 'inputAppend';
-            $this->flatpickrUtil->compilePicker($config, $templateData['arrConfiguration'],
-                $inputPosition);
+            $inputPosition = ($templateData['arrConfiguration']['flatpickr']['options']['prependPicker'] ?? false)
+                ? 'inputPrepend'
+                : 'inputAppend';
+            $this->flatpickrUtil
+                ->compilePicker($config, $templateData['arrConfiguration'], $inputPosition);
         }
         $event->setTemplateData($templateData);
     }
