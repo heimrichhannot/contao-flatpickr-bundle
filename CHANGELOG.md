@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.9.4] - 2024-05-21
+- Fixed: warnings with php 8
+
 ## [2.9.3] - 2024-03-21
 - Fixed: warnings with php 8
 
