@@ -139,12 +139,16 @@ class FlatpickrUtil
      */
     public function getFlatpickrType(array $config): string
     {
-        switch ($config['rgxp']) {
-            case 'time':
-                return 'timepicker';
-            default:
-                return 'datepicker';
+        if (isset($config['rgxp'])) {
+            switch ($config['rgxp']) {
+                case 'time':
+                    return 'timepicker';
+                default:
+                    return 'datepicker';
+            }
         }
+
+        return 'datepicker';
     }
 
     /**
